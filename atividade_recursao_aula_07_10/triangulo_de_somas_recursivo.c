@@ -128,7 +128,6 @@ void constVet(int B[], int A[], int n, int i){
    constVet(B, A, n, i+1);
 }
 
-
 // Função de impressão do vetor.
 // Entrada: vetor 'v' de tamanho 'n' e índice de início 'i' (inicialmente 0).
 // Saída: imprime o vetor no formato de lista.

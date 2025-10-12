@@ -44,7 +44,7 @@ int main(){
 // Saída: o MDC de 'a' e 'b'.
 // Se 'a' for igual a 0, retorne 'b'.
 // Se 'b' for igual a 0, retorne 'a'.
-// Caso contrário, retorne a função mdc() com os parâmetros 'b' e '
+// Caso contrário, retorne a função mdc() com os parâmetros 'b' e 'a%b'.
 int mdc(int a, int b){
     if(a == 0){
         return b;
