@@ -171,31 +171,119 @@ void QuickSort(int A[], int l, int r){
 }
 
 // Algoritmo Shell Sort
-// Ordena um vetor A[0..n-1]
-void ShellSort(int n, int A[]){
-
+// Ordena um vetor A[0..n-1] usando sequência de intervalos H[]
+void ShellSort(int n, int A[], int m, int H[]) {
+    for(int k=0; k<m; k++){  // percorre cada intervalo H[k]
+        int h = H[k];
+        for (int i=h; i<n; i++){
+            int atual = A[i];
+            int j = i - h;
+            while(j>=0 && A[j]>atual){
+                A[j+h] = A[j];
+                j -= h;
+            }
+            A[j+h] = atual;
+        }
+    }
 }
 
 // Algoritmo Heap Sort
 // Ordena um vetor A[0..n-1]
-void HeapSort(int n, int A[]){
+void Heapify(int A[], int n, int i){
+    int maior = i;
+    int esq = 2 * i + 1;
+    int dir = 2 * i + 2;
+    if(esq < n && A[esq] > A[maior]){
+        maior = esq;
+    }
+    if(dir < n && A[dir] > A[maior]){
+        maior = dir;
+    }
+    if(maior != i){
+        int aux = A[i];
+        A[i] = A[maior];
+        A[maior] = aux;
+        Heapify(A, n, maior);
+    }
+}
 
+void ConstroiHeap(int A[], int n){
+    for (int i=n/2-1; i>=0; i--){
+        Heapify(A, n, i);
+    }
+}
+
+void HeapSort(int A[], int n){
+    ConstroiHeap(A, n);
+    for (int i=n-1; i>0; i--){
+        int aux = A[0];
+        A[0] = A[i];
+        A[i] = aux;
+        Heapify(A, i, 0);
+    }
 }
 
 // Algoritmo Comb Sort
 // Ordena um vetor A[0..n-1]
 void CombSort(int n, int A[]){
-
+    int gap = n;
+    const float shrink = 1.3;
+    int trocou = 1;
+    while (gap > 1 || trocou){
+        gap = (int)(gap / shrink);
+        if (gap < 1){
+            gap = 1;
+        }
+        trocou = 0;
+        for(int i=0; i+gap<n; i++){
+            if(A[i] > A[i+gap]){
+                int temp = A[i];
+                A[i] = A[i+gap];
+                A[i+gap] = temp;
+                trocou = 1;
+            }
+        }
+    }
 }
 
 // Algoritmo Gnome Sort
 // Ordena um vetor A[0..n-1]
 void GnomeSort(int n, int A[]){
-
+    int i = 0;
+    while(i < n){
+        if(i == 0 || A[i] >= A[i-1]){
+            i++;
+        }
+        else{
+            int aux = A[i];
+            A[i] = A[i-1];
+            A[i-1] = aux;
+            i--;
+        }
+    }
 }
 
-// Algoritmo Odd-even Sort
+// Algoritmo Odd-Even Sort (Brick Sort)
 // Ordena um vetor A[0..n-1]
 void OddEvenSort(int n, int A[]){
-
+    int trocou = 1;
+    while(trocou){
+        trocou = 0;
+        for(int i=0; i<=n-2; i+=2){
+            if(A[i] > A[i+1]){
+                int aux = A[i];
+                A[i] = A[i+1];
+                A[i+1] = aux;
+                trocou = 1;
+            }
+        }
+        for(int i=1; i<=n-2; i+=2){
+            if(A[i] > A[i+1]){
+                int aux = A[i];
+                A[i] = A[i+1];
+                A[i+1] = aux;
+                trocou = 1;
+            }
+        }
+    }
 }
