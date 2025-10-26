@@ -12,8 +12,7 @@ Matrícula: 581180*/
  * @date 2025-10-13
  * 
  * @copyright Copyright (c) 2025
- * 
- */
+*/
 
 #include <stdio.h>
 #include <stdlib.h> 
@@ -22,7 +21,7 @@ Matrícula: 581180*/
 
 /**
  * Implementacao de dos algoritmos:
- */
+*/
 
 // Função Heapify é uma função auxiliar do algoritmo Heap Sort que promete
 // manter a propriedade de heap máximo em uma subárvore com raiz no índice 'i'.
@@ -49,18 +48,6 @@ void Heapify(int A[], int n, int i){
     }
 }
 
-// Função ConstroiHeap é responsável por transformar um vetor desordenado em um
-// heap máximo, estrutura na qual cada nó é maior que seus filhos. Essa etapa é
-// fundamental para o funcionamento do Heap Sort, pois organiza parcialmente o
-// vetor antes da ordenação final.
-// Entrada: vetor 'A[0...n-1]' e tamanho 'n'.
-// Saída: vetor reorganizado em forma de heap máximo.
-void ConstroiHeap(int A[], int n){
-    for (int i=n/2-1; i>=0; i--){
-        Heapify(A, n, i);
-    }
-}
-
 // Algoritmo Heap Sort é uma função que promete ordenar um vetor A[0...n-1] de
 // forma crescente, utilizando a estrutura de heap máximo. O maior elemento é
 // colocado no final do vetor a cada iteração, e o heap é reajustado para manter
@@ -69,8 +56,10 @@ void ConstroiHeap(int A[], int n){
 // Entrada: tamanho 'n' do vetor e vetor 'A[0...n-1]'.
 // Saída: vetor ordenado em ordem crescente.
 void HeapSort(int n, int A[]){
-    ConstroiHeap(A, n);
-    for (int i=n-1; i>0; i--){
+	for(int i=n/2-1; i>=0; i--){
+        Heapify(A, n, i);
+    }
+    for(int i=n-1; i>0; i--){
         int aux = A[0];
         A[0] = A[i];
         A[i] = aux;
@@ -85,9 +74,9 @@ void HeapSort(int n, int A[]){
 // Entrada: tamanho 'n' do vetor, vetor 'A[0...n-1]'.
 // Saída: vetor ordenado em ordem crescente;
 void BubbleSort(int n, int A[]) {   
-    for (int i = 0; i < n-1; ++i) {   
-		for (int j = n-1; j > i; --j) {
-			if (A[j] < A[j-1]) { 
+    for (int i = 0; i < n-1; ++i) {
+		for (int j = n-1; j > i; --j) { // j percorre o vetor decrescendo até i
+			if (A[j] < A[j-1]) { // Se A[j] for maior que o anterior, trocam de posição
 				int aux = A[j];
 				A[j] = A[j-1];
 				A[j-1] = aux;  
@@ -104,9 +93,9 @@ void BubbleSort(int n, int A[]) {
 // Saída: vetor ordenado em ordem crescente.
 void InsertionSort(int n, int A[]){
     for(int j=1; j<n; j++){
-        int key = A[j];
+        int key = A[j]; // Decidi-se a chave para comparações
         int i = j - 1;
-        while(i >= 0 && A[i] > key){
+        while(i >= 0 && A[i] > key){ // Se A[i] for maior que a chave e i for maior ou igual a 0, A[i] muda de lugar
             A[i+1] = A[i];
             i--;
         }
@@ -124,25 +113,27 @@ void InsertionSort(int n, int A[]){
 void SelectionSort(int n, int A[]){
     for(int i=0; i<n-1; i++){
         int indexMin = i;
+		// Descobre-se o menor elemento
         for(int j=i+1; j<n; j++){
             if(A[j]<A[indexMin]){
                 indexMin = j;
             }
         }
+		// O menor elemento é colocado em seu lugar
         int aux = A[i];
         A[i] = A[indexMin];
         A[indexMin] = aux;
     }
 }
 
-// Função Intercala, auxiliar ao funcionamento do algoritmo Merge Sort.
-// Recebe valores crescentes A[p...q] e A[q+1...r] e rearranja A[p...r] em ordem crescente
+// Função Intercala é uma função auxiliar do algoritmo Merge Sort que promete
+// unir dois subvetores já ordenados, A[p...q] e A[q+1...r], em um único vetor
+// ordenado A[p...r]. Essa etapa combina os resultados das chamadas recursivas
+// do Merge Sort, mantendo a ordenação crescente.
+// Entrada: vetor 'A[0...n-1]' e índices 'p', 'q' e 'r'
+// Saída: vetor 'A[p...r]' reorganizado em ordem crescente.
 void Intercala(int A[], int p, int q, int r){
-	int n = r-p+1;
-	int B[n];
-	int i = p;
-	int j = q + 1;
-	int k = 0;
+	int B[r-p+1], i = p, j = q + 1, k = 0;
 	// Intercala A[p...q] e A[q+1...r]
 	while(i <= q && j <= r){
 		if(A[i] <= A[j]){
@@ -152,6 +143,7 @@ void Intercala(int A[], int p, int q, int r){
 			B[k++] = A[j++];
 		}
 	}
+	// Caso ainda tenham sobrado números, são copiados para o vetor auxiliar
 	while(i <= q){
 		B[k++] = A[i++];
 	}
@@ -164,9 +156,11 @@ void Intercala(int A[], int p, int q, int r){
 	}
 }
 
-// Algoritmo Merge Sort recebe como entrada um vetor de inteiros A[p...r]
-// com tamanho n = r - q + 1 elementos e ordena-os em ordem crescente.
-// Parâmetros: vetor A[p...r], índice inicial p e índice final r.
+// Algoritmo Merge Sort é uma função que promete ordenar um vetor A[p...r]
+// de forma crescente. O vetor é dividido em duas metades, cada uma ordenada
+// recursivamente, e depois combinadas pela função Intercala.
+// Entrada: vetor 'A[p...r]' e índices 'p' (início) e 'r' (fim).
+// Saída: vetor 'A[p...r]' ordenado em ordem crescente.
 void MergeSort(int A[], int p, int r){
 	if(p < r){
 		int q = (p + r) / 2; // Dividir
@@ -178,29 +172,37 @@ void MergeSort(int A[], int p, int r){
 	}
 }
 
-// Algorítmo partition, auxiliar ao funcionamento do Quick Sort.
-// Recebe vetores crescentes A[l...j-1] e A[j+1...r].
+// Função Partition é uma função auxiliar do algoritmo Quick Sort que promete
+// posicionar o pivô em sua posição correta no vetor. Todos os elementos menores
+// ou iguais ao pivô são colocados à esquerda, e os maiores, à direita.
+// Entrada: vetor 'A[l...r]', índice inicial 'l' e índice final 'r'.
+// Saída: índice 'j' que indica a posição final do pivô no vetor.
 int partition(int A[], int l, int r){
     int pivo = A[r];
     int j = l;
-    for(int i=l; i<r; i++){
+    for(int i=l; i<r; i++){ // Percorre o vetor e controi dois subvetores dentro, de menores e maiores
         if(A[i] <= pivo){
             int aux = A[i];
             A[i] = A[j];
             A[j++] = aux;
         }
     }
-    A[r] = A[j];
+    A[r] = A[j]; // Atualiza-se a posição do vetor
     A[j] = pivo;
     return j;
 }
 
-// Algoritmo Quick Sort recebe como entrada um vetor de inteiros A[n]
-// com tamanho n = r - l + 1 elementos e ordena-os em ordem crescente.
-// Parâmetros: vetor A[n], índice inicial l e índice final r.
+// Algoritmo Quick Sort é uma função que promete ordenar um vetor A[l...r] de
+// forma crescente. O vetor é particionado com base em um pivô, que separa os 
+// elementos menores e maiores. O processo é aplicado recursivamente às duas 
+// partes até que o vetor esteja ordenado.
+// Entrada: vetor 'A[l...r]', índice inicial 'l' e índice final 'r'.
+// Saída: vetor 'A[l...r]' ordenado em ordem crescente.
 void QuickSort(int A[], int l, int r){
     if(l<r){
+		// Dividir: descobrir a posição do pivô
         int j = partition(A, l, r);
+		// Conquistar: chamada recursiva dos dois lados do pivô
         QuickSort(A, l, j-1);
         QuickSort(A, j+1, r);
     }
@@ -326,16 +328,15 @@ int main()
 			
 			ler_dados(tamanho_vetor, vetor, nome_arquivo);
 			
-			// HeapSort ------------------------------------------------------
-			// obtendo o tempo inicial
+			// HeapSort: obtendo o tempo inicial
 			clock_t ini = clock();
 		
-			HeapSort(tamanho_vetor, vetor); // ordena o vetor usando o HeapSort
+			HeapSort(vetor, tamanho_vetor); // Ordena o vetor usando o HeapSort
 		
-			// obtendo o tempo final
+			// Obtendo o tempo final
 			clock_t fim = clock();
 
-			// obtendo a duracao total da ordenacao
+			// Obtendo a duracao total da ordenacao
 			long double duracao_microsegundos = (double)(fim - ini) * 1e6 / CLOCKS_PER_SEC;
 			
 			duracao_media_heap += duracao_microsegundos;
@@ -347,7 +348,7 @@ int main()
 		fprintf(ofs, "%d %Lf\n", tamanho_vetor, duracao_media_heap);
 	}
 	
-	fclose(ofs);// fecha arquivo de resultados do Heap Sort
+	fclose(ofs); // Fecha arquivo de resultados do Heap Sort
 	// ------------------------------------------------------------
 	
 	
