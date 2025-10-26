@@ -197,15 +197,15 @@ void QuickSort(int A[], int l, int r){
 // ----------------------------------------------------------------------
 
 /** 
- * Funcao que gera arquivos binarios, cada um contendo numeros aleatorios.
- * Essa funcao recebe um array 'vetor_tam' que contem todos os tamanhos N
- * de vetores aleatorios que serao gerados. O parametro 'num_iteracoes' eh
+ * Função que gera arquivos binários, cada um contendo números aleatórios.
+ * Essa função recebe um array 'vetor_tam' que contém todos os tamanhos N
+ * de vetores aleatórios que serão gerados. O parâmetro 'num_iteracoes' é
  * o tamanho do array 'vetor_tam' 
  */
 void gera_dados(int num_iteracoes, const int vetor_tam[]) 
 {
 	for(int n = 0; n < num_iteracoes; ++n) {
-		// para cada tamanho n, sao gerados 5 vetores de tamanho n com numeros aleatorios
+		// Para cada tamanho n, são gerados 5 vetores de tamanho n com numeros aleatórios
 		for(int semente = 0; semente < 5; semente++) {
 
 			char nome_arquivo[150];
@@ -218,13 +218,13 @@ void gera_dados(int num_iteracoes, const int vetor_tam[])
                 exit(EXIT_FAILURE);
             }
 
-			srand((unsigned) time(NULL) + semente); // semente variável
+			srand((unsigned) time(NULL) + semente); // Semente variável
             int tamanho_vetor = vetor_tam[n];
             int r;
 
 			for (int i = 0; i < tamanho_vetor; i++) {
                 r = rand() % 1000; // Criar númenos para o vetor no intervalo entre 0 e 999
-                fwrite(&r, sizeof(r), 1, fout); // escreve número em binário
+                fwrite(&r, sizeof(r), 1, fout); // Escreve número em binário
             }
 
             fclose(fout);
@@ -236,11 +236,11 @@ void gera_dados(int num_iteracoes, const int vetor_tam[])
 
 /*
  * Recebe um vetor de inteiros A[0..n-1] como argumento e o preenche
- * com os n inteiros contidos no arquivo binario de mesmo nome que a 
+ * com os n inteiros contidos no arquivo binário de mesmo nome que a 
  * string nomeArquivo
  */
 void ler_dados(int n, int A[], const char *nomeArquivo) {
-    FILE *input_file = fopen(nomeArquivo, "rb"); // abre arquivo binário para leitura
+    FILE *input_file = fopen(nomeArquivo, "rb"); // Abre arquivo binário para leitura
     if (input_file == NULL) {
         perror("Erro ao abrir o arquivo para leitura");
         exit(EXIT_FAILURE);
@@ -251,17 +251,16 @@ void ler_dados(int n, int A[], const char *nomeArquivo) {
         fprintf(stderr, "Aviso: esperava ler %d inteiros, mas leu %zu.\n", n, lidos);
     }
 
-    fclose(input_file); // fecha o arquivo
+    fclose(input_file); // Fecha o arquivo
 }
 
-
 // ----------------------------------------------------------------------------
-// Funcao Principal
+// Função Principal
 int main() 
 { 
 	// Os tamanhos dos vetores a serem testados estao guardados neste vetor 'tam'	
 	// tamanhos reais para o projeto
-	/*const int tam[] = {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 
+	const int tam[] = {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 
 	                   11000, 12000, 13000, 14000, 15000, 16000, 17000, 18000, 19000, 
 					   20000, 21000, 22000, 23000, 24000, 25000, 26000, 27000, 28000, 
 					   29000, 30000, 31000, 32000, 33000, 34000, 35000, 36000, 37000, 
@@ -271,26 +270,26 @@ int main()
 					   65000, 66000, 67000, 68000, 69000, 70000, 71000, 72000, 73000, 
 					   74000, 75000, 76000, 77000, 78000, 79000, 80000, 81000, 82000, 
 					   83000, 84000, 85000, 86000, 87000, 88000, 89000, 90000, 91000, 
-					   92000, 93000, 94000, 95000, 96000, 97000, 98000, 99000, 100000};*/
+					   92000, 93000, 94000, 95000, 96000, 97000, 98000, 99000, 100000};
 	
 	// tamanho reduzido apenas para teste
-	const int tam[] = {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 
+	/*const int tam[] = {1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000, 10000, 
 	                   11000, 12000, 13000, 14000, 15000, 16000, 17000, 18000, 19000, 
-					   20000};
+					   20000};*/
 	
-	const int TOTAL_N = sizeof(tam)/sizeof(tam[0]); // determina tamanho do vetor 'tam'
+	const int TOTAL_N = sizeof(tam)/sizeof(tam[0]); // Determina tamanho do vetor 'tam'
 	
 	// ------------------------------------------------------------
-	// Etapa 1: Gerar arquivos contendo numeros aleatorios
-	// Os arquivos sao gerados e salvos na pasta com nome 'dados'
+	// Etapa 1: Gerar arquivos contendo numeros aleatórios
+	// Os arquivos são gerados e salvos na pasta com nome 'dados'
 	gera_dados(TOTAL_N, tam);
 	
 	// ------------------------------------------------------------
-	// Etapa 2 - Execucao do HeapSort
+	// Etapa 2 - Execução do Odd-even Sort
 	// Para cada arquivo gerado na etapa 1, ler o arquivo e popular
 	// um vetor de inteiros com os dados lidos.
 
-	FILE *ofs = fopen("resultados/resultadoHeap.txt", "w"); 
+	FILE *ofs = fopen("resultados/resultadoOddeven.txt", "w"); 
     if (ofs == NULL) {
         perror("Erro ao abrir o arquivo para escrita");
         exit(EXIT_FAILURE);
@@ -298,14 +297,14 @@ int main()
 
 	for(int iteracao = 0; iteracao < TOTAL_N; iteracao++) 
 	{	
-		long double duracao_media_heap = 0.0;
-		const int tamanho_vetor = tam[iteracao]; // pega o tamanho do vetor para esta iteracao
-		int vetor[tamanho_vetor]; // cria vetor a ser ordenado
+		long double duracao_media_oddeven = 0.0;
+		const int tamanho_vetor = tam[iteracao]; // Pega o tamanho do vetor para esta iteração
+		int vetor[tamanho_vetor]; // Cria vetor a ser ordenado
 		
-		// Para cada tamanho de vetor, a funcao gera_dados() gerou 5 vetores diferentes. 
-		// Cada um usou uma semente diferente. Agora, vamos ler cada um desses vetores, 
-		// Chamar o heap sort para ordena-los e, entao, calcular o tempo medio de 
-		// execucao dessas cinco chamadas e depois salvar esse tempo medio em arquivo.
+		// Para cada tamanho de vetor, a função gera_dados() gerou 5 vetores diferentes. 
+		// Cada um usou uma semente diferente. Agora, lê-se cada um desses vetores, 
+		// Chamar o Odd-even Sort para ordená-los e, então, calcular o tempo medio de 
+		// execução dessas cinco chamadas e depois salvar esse tempo médio em arquivo.
 		for(int semente = 0; semente < 5; semente++) 
 		{	
 			char nome_arquivo[150];
@@ -314,27 +313,27 @@ int main()
 			
 			ler_dados(tamanho_vetor, vetor, nome_arquivo);
 			
-			// HeapSort: obtendo o tempo inicial
+			// Odd-even Sort: Obtendo o tempo inicial
 			clock_t ini = clock();
 		
-			HeapSort(vetor, tamanho_vetor); // Ordena o vetor usando o HeapSort
+			OddevenSort(tamanho_vetor, vetor); // Ordena o vetor usando o Odd-even Sort
 		
 			// Obtendo o tempo final
 			clock_t fim = clock();
 
-			// Obtendo a duracao total da ordenacao
+			// Obtendo a duração total da ordenação
 			long double duracao_microsegundos = (double)(fim - ini) * 1e6 / CLOCKS_PER_SEC;
 			
-			duracao_media_heap += duracao_microsegundos;
+			duracao_media_oddeven += duracao_microsegundos;
 			
 		}
 		
-		duracao_media_heap = duracao_media_heap / 5.0;
-		printf("[Heap] N = %d, tempo medio de execucao = %.2Lf microssegundos\n", tamanho_vetor, duracao_media_heap);
-		fprintf(ofs, "%d %Lf\n", tamanho_vetor, duracao_media_heap);
+		duracao_media_oddeven = duracao_media_oddeven / 5.0;
+		printf("[Oddeven] N = %d, tempo medio de execucao = %.2Lf microssegundos\n", tamanho_vetor, duracao_media_oddeven);
+		fprintf(ofs, "%d %Lf\n", tamanho_vetor, duracao_media_oddeven);
 	}
 	
-	fclose(ofs); // Fecha arquivo de resultados do Heap Sort
+	fclose(ofs); // Fecha arquivo de resultados do Odd-even Sort
 	// ------------------------------------------------------------
 	
 	
@@ -351,13 +350,13 @@ int main()
 	for(int iteracao = 0; iteracao < TOTAL_N; iteracao++) {
 		
 		long double duracao_media_bubble = 0.0;
-		const int tamanho_vetor = tam[iteracao]; // pega o tamanho do vetor para esta iteracao
-		int vetor[tamanho_vetor]; // cria vetor a ser ordenado
+		const int tamanho_vetor = tam[iteracao]; // Pega o tamanho do vetor para esta iteração
+		int vetor[tamanho_vetor]; // Cria vetor a ser ordenado
 		
-		// Para cada tamanho de vetor, a funcao gera_dados() gerou 5 vetores diferentes. 
+		// Para cada tamanho de vetor, a função gera_dados() gerou 5 vetores diferentes. 
 		// Cada um usou uma semente diferente. Agora, vamos ler cada um desses vetores, 
-		// Chamar o bubblesort para ordena-los e, entao, calcular o tempo medio de 
-		// execucao dessas cinco chamadas e depois salvar esse tempo medio em arquivo.
+		// Chamar o Bubble Sort para ordenás-los e, então, calcular o tempo médio de 
+		// execução dessas cinco chamadas e depois salvar esse tempo médio em arquivo.
 		for(int semente = 0; semente < 5; semente++) 
 		{	
 			char nome_arquivo[150];
@@ -366,16 +365,15 @@ int main()
 			
 			ler_dados(tamanho_vetor, vetor, nome_arquivo);
 			
-			// BubbleSort ---------------------------------------------------------
-			// obtendo o tempo inicial
+			// Bubble Sort: Obtendo o tempo inicial
 			clock_t ini2 = clock();
 		
-			BubbleSort(tamanho_vetor, vetor); // ordena o vetor usando o BubbleSort
+			BubbleSort(tamanho_vetor, vetor); // Ordena o vetor usando o Bubble Sort
 		
-			// obtendo o tempo final
+			// Obtendo o tempo final
 			clock_t fim2 = clock();
 		
-			// obtendo a duracao total da ordenacao
+			// Obtendo a duração total da ordenação
 			long double duracao_bubble = (double)(fim2 - ini2) * 1e6 / CLOCKS_PER_SEC;
 
 			duracao_media_bubble += duracao_bubble;			
@@ -386,12 +384,12 @@ int main()
 		fprintf(ofs2, "%d %Lf\n", tamanho_vetor, duracao_media_bubble);
 	}
 	
-	fclose(ofs2); // fecha arquivo de resultados do Bubble Sort
+	fclose(ofs2); // Fecha arquivo de resultados do Bubble Sort
 	// ------------------------------------------------------------
 	
 
 	// ------------------------------------------------------------
-	// Etapa 4 - Execução do InsertionSort
+	// Etapa 4 - Execução do Insertion Sort
 	// Para cada arquivo gerado na etapa 1, ler o arquivo e popular
 	// um vetor de inteiros com os dados lidos.
 	FILE *ofs3 = fopen("resultados/resultadoInsertion.txt", "w"); 
@@ -403,13 +401,13 @@ int main()
 	for(int iteracao = 0; iteracao < TOTAL_N; iteracao++) {
 		
 		long double duracao_media_insertion = 0.0;
-		const int tamanho_vetor = tam[iteracao]; // pega o tamanho do vetor para esta iteracao
-		int vetor[tamanho_vetor]; // cria vetor a ser ordenado
+		const int tamanho_vetor = tam[iteracao]; // Pega o tamanho do vetor para esta iteração
+		int vetor[tamanho_vetor]; // Cria vetor a ser ordenado
 		
-		// Para cada tamanho de vetor, a funcao gera_dados() gerou 5 vetores diferentes. 
+		// Para cada tamanho de vetor, a função gera_dados() gerou 5 vetores diferentes. 
 		// Cada um usou uma semente diferente. Agora, vamos ler cada um desses vetores, 
-		// Chamar o InsertionSort para ordena-los e, entao, calcular o tempo medio de 
-		// execucao dessas cinco chamadas e depois salvar esse tempo medio em arquivo.
+		// Chamar o Insertion Sort para ordená-los e, então, calcular o tempo médio de 
+		// execução dessas cinco chamadas e depois salvar esse tempo médio em arquivo.
 		for(int semente = 0; semente < 5; semente++) 
 		{	
 			char nome_arquivo[150];
@@ -418,32 +416,31 @@ int main()
 			
 			ler_dados(tamanho_vetor, vetor, nome_arquivo);
 			
-			// InsertionSort ---------------------------------------------------------
-			// obtendo o tempo inicial
+			// Insertion Sort: Obtendo o tempo inicial
 			clock_t ini2 = clock();
 		
-			InsertionSort(tamanho_vetor, vetor); // ordena o vetor usando o InsertionSort
+			InsertionSort(tamanho_vetor, vetor); // Ordena o vetor usando o InsertionSort
 		
-			// obtendo o tempo final
+			// Obtendo o tempo final
 			clock_t fim2 = clock();
 		
-			// obtendo a duracao total da ordenacao
+			// Obtendo a duração total da ordenação
 			long double duracao_insertion = (double)(fim2 - ini2) * 1e6 / CLOCKS_PER_SEC;
 
 			duracao_media_insertion += duracao_insertion;			
-		}	
+		}
 		
 		duracao_media_insertion = duracao_media_insertion / 5.0;
 		printf("[Insertion] N = %d, tempo medio de execucao = %.2Lf microssegundos\n", tamanho_vetor, duracao_media_insertion);
 		fprintf(ofs3, "%d %Lf\n", tamanho_vetor, duracao_media_insertion);
 	}
 	
-	fclose(ofs3); // fecha arquivo de resultados do InsertionSort
+	fclose(ofs3); // Fecha arquivo de resultados do InsertionSort
 	// ------------------------------------------------------------
 	
 
 	// ------------------------------------------------------------
-	// Etapa 5 - Execução do SelectionSort
+	// Etapa 5 - Execução do Selection Sort
 	// Para cada arquivo gerado na etapa 1, ler o arquivo e popular
 	// um vetor de inteiros com os dados lidos.
 	FILE *ofs4 = fopen("resultados/resultadoSelection.txt", "w"); 
@@ -455,13 +452,13 @@ int main()
 	for(int iteracao = 0; iteracao < TOTAL_N; iteracao++) {
 		
 		long double duracao_media_selection = 0.0;
-		const int tamanho_vetor = tam[iteracao]; // pega o tamanho do vetor para esta iteracao
-		int vetor[tamanho_vetor]; // cria vetor a ser ordenado
+		const int tamanho_vetor = tam[iteracao]; // Pega o tamanho do vetor para esta iteração
+		int vetor[tamanho_vetor]; // Cria vetor a ser ordenado
 		
-		// Para cada tamanho de vetor, a funcao gera_dados() gerou 5 vetores diferentes. 
+		// Para cada tamanho de vetor, a função gera_dados() gerou 5 vetores diferentes. 
 		// Cada um usou uma semente diferente. Agora, vamos ler cada um desses vetores, 
-		// Chamar o SelectionSort para ordena-los e, entao, calcular o tempo medio de 
-		// execucao dessas cinco chamadas e depois salvar esse tempo medio em arquivo.
+		// Chamar o Selection Sort para ordená-los e, então, calcular o tempo médio de 
+		// execução dessas cinco chamadas e depois salvar esse tempo médio em arquivo.
 		for(int semente = 0; semente < 5; semente++) 
 		{	
 			char nome_arquivo[150];
@@ -470,16 +467,15 @@ int main()
 			
 			ler_dados(tamanho_vetor, vetor, nome_arquivo);
 			
-			// SelectionSort ---------------------------------------------------------
-			// obtendo o tempo inicial
+			// SelectionSort: Obtendo o tempo inicial
 			clock_t ini2 = clock();
 		
-			SelectionSort(tamanho_vetor, vetor); // ordena o vetor usando o SelectionSort
+			SelectionSort(tamanho_vetor, vetor); // ordena o vetor usando o Selection Sort
 		
-			// obtendo o tempo final
+			// Obtendo o tempo final
 			clock_t fim2 = clock();
 		
-			// obtendo a duracao total da ordenacao
+			// Obtendo a duração total da ordenação
 			long double duracao_selection = (double)(fim2 - ini2) * 1e6 / CLOCKS_PER_SEC;
 
 			duracao_media_selection += duracao_selection;			
@@ -490,11 +486,11 @@ int main()
 		fprintf(ofs4, "%d %Lf\n", tamanho_vetor, duracao_media_selection);
 	}
 	
-	fclose(ofs4); // fecha arquivo de resultados do SelectionSort
+	fclose(ofs4); // Fecha arquivo de resultados do Selection Sort
 	// ------------------------------------------------------------
 
 	// ------------------------------------------------------------
-	// Etapa 6 - Execução do MergeSort
+	// Etapa 6 - Execução do Merge Sort
 	// Para cada arquivo gerado na etapa 1, ler o arquivo e popular
 	// um vetor de inteiros com os dados lidos.
 	FILE *ofs5 = fopen("resultados/resultadoMerge.txt", "w"); 
@@ -506,12 +502,12 @@ int main()
 	for(int iteracao = 0; iteracao < TOTAL_N; iteracao++) {
 		
 		long double duracao_media_merge = 0.0;
-		const int tamanho_vetor = tam[iteracao]; // pega o tamanho do vetor para esta iteracao
-		int vetor[tamanho_vetor]; // cria vetor a ser ordenado
+		const int tamanho_vetor = tam[iteracao]; // Pega o tamanho do vetor para esta iteração
+		int vetor[tamanho_vetor]; // Cria vetor a ser ordenado
 		
-		// Para cada tamanho de vetor, a funcao gera_dados() gerou 5 vetores diferentes. 
+		// Para cada tamanho de vetor, a função gera_dados() gerou 5 vetores diferentes. 
 		// Cada um usou uma semente diferente. Agora, vamos ler cada um desses vetores, 
-		// Chamar o MergeSort para ordena-los e, entao, calcular o tempo medio de 
+		// Chamar o Merge Sort para ordená-los e, entao, calcular o tempo medio de 
 		// execucao dessas cinco chamadas e depois salvar esse tempo medio em arquivo.
 		for(int semente = 0; semente < 5; semente++) 
 		{	
@@ -521,16 +517,15 @@ int main()
 			
 			ler_dados(tamanho_vetor, vetor, nome_arquivo);
 			
-			// MergeSort ---------------------------------------------------------
-			// obtendo o tempo inicial
+			// MergeSort: Obtendo o tempo inicial
 			clock_t ini2 = clock();
 		
-			MergeSort(vetor, 0, tamanho_vetor - 1);; // ordena o vetor usando o MergeSort
+			MergeSort(vetor, 0, tamanho_vetor - 1);; // Ordena o vetor usando o Merge Sort
 		
-			// obtendo o tempo final
+			// Obtendo o tempo final
 			clock_t fim2 = clock();
 		
-			// obtendo a duracao total da ordenacao
+			// Obtendo a duracao total da ordenação
 			long double duracao_merge = (double)(fim2 - ini2) * 1e6 / CLOCKS_PER_SEC;
 
 			duracao_media_merge += duracao_merge;			
@@ -541,12 +536,12 @@ int main()
 		fprintf(ofs5, "%d %Lf\n", tamanho_vetor, duracao_media_merge);
 	}
 	
-	fclose(ofs5); // fecha arquivo de resultados do MergeSort
+	fclose(ofs5); // Fecha arquivo de resultados do Merge Sort
     // ------------------------------------------------------------
 	
 
 	// ------------------------------------------------------------
-	// Etapa 7 - Execução do QuickSort
+	// Etapa 7 - Execução do Quick Sort
 	// Para cada arquivo gerado na etapa 1, ler o arquivo e popular
 	// um vetor de inteiros com os dados lidos.
 	FILE *ofs6 = fopen("resultados/resultadoQuick.txt", "w"); 
@@ -558,12 +553,12 @@ int main()
 	for(int iteracao = 0; iteracao < TOTAL_N; iteracao++) {
 		
 		long double duracao_media_quick = 0.0;
-		const int tamanho_vetor = tam[iteracao]; // pega o tamanho do vetor para esta iteracao
-		int vetor[tamanho_vetor]; // cria vetor a ser ordenado
+		const int tamanho_vetor = tam[iteracao]; // Pega o tamanho do vetor para esta iteracao
+		int vetor[tamanho_vetor]; // Cria vetor a ser ordenado
 		
-		// Para cada tamanho de vetor, a funcao gera_dados() gerou 5 vetores diferentes. 
+		// Para cada tamanho de vetor, a função gera_dados() gerou 5 vetores diferentes. 
 		// Cada um usou uma semente diferente. Agora, vamos ler cada um desses vetores, 
-		// Chamar o MergeSort para ordena-los e, entao, calcular o tempo medio de 
+		// Chamar o MergeSort para ordená-los e, entao, calcular o tempo medio de 
 		// execucao dessas cinco chamadas e depois salvar esse tempo medio em arquivo.
 		for(int semente = 0; semente < 5; semente++) 
 		{	
@@ -573,16 +568,15 @@ int main()
 			
 			ler_dados(tamanho_vetor, vetor, nome_arquivo);
 			
-			// QuickSort ---------------------------------------------------------
-			// obtendo o tempo inicial
+			// QuickSort: Obtendo o tempo inicial
 			clock_t ini2 = clock();
 		
 			QuickSort(vetor, 0, tamanho_vetor - 1); // ordena o vetor usando o QuickSort
 		
-			// obtendo o tempo final
+			// Obtendo o tempo final
 			clock_t fim2 = clock();
 		
-			// obtendo a duracao total da ordenacao
+			// Obtendo a duração total da ordenação
 			long double duracao_quick = (double)(fim2 - ini2) * 1e6 / CLOCKS_PER_SEC;
 
 			duracao_media_quick += duracao_quick;			
@@ -593,6 +587,6 @@ int main()
 		fprintf(ofs6, "%d %Lf\n", tamanho_vetor, duracao_media_quick);
 	}
 	
-	fclose(ofs6); // fecha arquivo de resultados do QuickSort
+	fclose(ofs6); // Fecha arquivo de resultados do QuickSort
 	return 0;
 }
