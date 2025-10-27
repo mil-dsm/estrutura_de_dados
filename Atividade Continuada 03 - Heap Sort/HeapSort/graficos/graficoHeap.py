@@ -46,6 +46,7 @@ plt.yticks(fontsize=12)
 plt.legend(fontsize=12)
 
 # Salvar o gráfico em PNG
+plt.ticklabel_format(style='plain', axis='y')
 plt.tight_layout()
 plt.savefig(arquivo_saida, dpi=300)
 plt.show()
