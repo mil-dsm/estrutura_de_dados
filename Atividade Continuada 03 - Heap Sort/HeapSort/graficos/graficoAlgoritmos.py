@@ -104,8 +104,7 @@ plt.plot(
 # Estilo do gráfico
 plt.xlabel("Tamanho do Vetor", fontsize=14, fontweight='bold')
 plt.ylabel("Microssegundos", fontsize=14, fontweight='bold')
-plt.yscale('log')
-plt.title("Comparativo de Desempenho dos Algoritmos de Ordenação", fontsize=16, fontweight='bold')
+plt.title("Comparativo Algoritmos", fontsize=16, fontweight='bold')
 plt.grid(True, linestyle='--', alpha=0.6)
 plt.xticks(fontsize=12)
 plt.yticks(fontsize=12)

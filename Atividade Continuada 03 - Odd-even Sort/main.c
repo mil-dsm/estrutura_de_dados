@@ -285,11 +285,11 @@ int main()
 	gera_dados(TOTAL_N, tam);
 	
 	// ------------------------------------------------------------
-	// Etapa 2 - Execução do Odd-even Sort
+	// Etapa 2 - Execução do HeapSort
 	// Para cada arquivo gerado na etapa 1, ler o arquivo e popular
 	// um vetor de inteiros com os dados lidos.
 
-	FILE *ofs = fopen("resultados/resultadoOddeven.txt", "w"); 
+	FILE *ofs = fopen("resultados/resultadoHeap.txt", "w"); 
     if (ofs == NULL) {
         perror("Erro ao abrir o arquivo para escrita");
         exit(EXIT_FAILURE);
@@ -297,13 +297,13 @@ int main()
 
 	for(int iteracao = 0; iteracao < TOTAL_N; iteracao++) 
 	{	
-		long double duracao_media_oddeven = 0.0;
+		long double duracao_media_heap = 0.0;
 		const int tamanho_vetor = tam[iteracao]; // Pega o tamanho do vetor para esta iteração
 		int vetor[tamanho_vetor]; // Cria vetor a ser ordenado
 		
 		// Para cada tamanho de vetor, a função gera_dados() gerou 5 vetores diferentes. 
 		// Cada um usou uma semente diferente. Agora, lê-se cada um desses vetores, 
-		// Chamar o Odd-even Sort para ordená-los e, então, calcular o tempo medio de 
+		// Chamar o Heap Sort para ordená-los e, então, calcular o tempo medio de 
 		// execução dessas cinco chamadas e depois salvar esse tempo médio em arquivo.
 		for(int semente = 0; semente < 5; semente++) 
 		{	
@@ -313,10 +313,10 @@ int main()
 			
 			ler_dados(tamanho_vetor, vetor, nome_arquivo);
 			
-			// Odd-even Sort: Obtendo o tempo inicial
+			// HeapSort: Obtendo o tempo inicial
 			clock_t ini = clock();
 		
-			OddevenSort(tamanho_vetor, vetor); // Ordena o vetor usando o Odd-even Sort
+			HeapSort(tamanho_vetor, vetor); // Ordena o vetor usando o HeapSort
 		
 			// Obtendo o tempo final
 			clock_t fim = clock();
@@ -324,16 +324,16 @@ int main()
 			// Obtendo a duração total da ordenação
 			long double duracao_microsegundos = (double)(fim - ini) * 1e6 / CLOCKS_PER_SEC;
 			
-			duracao_media_oddeven += duracao_microsegundos;
+			duracao_media_heap += duracao_microsegundos;
 			
 		}
 		
-		duracao_media_oddeven = duracao_media_oddeven / 5.0;
-		printf("[Oddeven] N = %d, tempo medio de execucao = %.2Lf microssegundos\n", tamanho_vetor, duracao_media_oddeven);
-		fprintf(ofs, "%d %Lf\n", tamanho_vetor, duracao_media_oddeven);
+		duracao_media_heap = duracao_media_heap / 5.0;
+		printf("[Heap] N = %d, tempo medio de execucao = %.2Lf microssegundos\n", tamanho_vetor, duracao_media_heap);
+		fprintf(ofs, "%d %Lf\n", tamanho_vetor, duracao_media_heap);
 	}
 	
-	fclose(ofs); // Fecha arquivo de resultados do Odd-even Sort
+	fclose(ofs); // Fecha arquivo de resultados do Heap Sort
 	// ------------------------------------------------------------
 	
 	
@@ -435,7 +435,7 @@ int main()
 		fprintf(ofs3, "%d %Lf\n", tamanho_vetor, duracao_media_insertion);
 	}
 	
-	fclose(ofs3); // Fecha arquivo de resultados do InsertionSort
+	fclose(ofs3); // Fecha arquivo de resultados do Insertion Sort
 	// ------------------------------------------------------------
 	
 
@@ -587,6 +587,6 @@ int main()
 		fprintf(ofs6, "%d %Lf\n", tamanho_vetor, duracao_media_quick);
 	}
 	
-	fclose(ofs6); // Fecha arquivo de resultados do QuickSort
+	fclose(ofs6); // Fecha arquivo de resultados do Quick Sort
 	return 0;
 }
