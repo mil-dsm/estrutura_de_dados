@@ -515,7 +515,7 @@ int main()
 			// MergeSort: Obtendo o tempo inicial
 			clock_t ini2 = clock();
 		
-			MergeSort(vetor, 0, tamanho_vetor - 1);; // Ordena o vetor usando o Merge Sort
+			MergeSort(vetor, 0, tamanho_vetor - 1); // Ordena o vetor usando o Merge Sort
 		
 			// Obtendo o tempo final
 			clock_t fim2 = clock();
