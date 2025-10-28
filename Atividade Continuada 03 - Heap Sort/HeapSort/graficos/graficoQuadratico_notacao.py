@@ -80,7 +80,7 @@ plt.ticklabel_format(style='sci', axis='y', scilimits=(0,0))
 plt.gca().yaxis.get_offset_text().set_fontsize(12)  # deixa o '1e7' legível
 
 # Salvar e mostrar
-plt.ticklabel_format(style='plain', axis='y')
+# plt.ticklabel_format(style='plain', axis='y')
 plt.tight_layout()
 plt.savefig(arquivo_saida, dpi=300)
 plt.show()

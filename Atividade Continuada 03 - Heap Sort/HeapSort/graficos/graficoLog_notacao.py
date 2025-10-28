@@ -80,7 +80,7 @@ plt.gca().yaxis.set_major_formatter(ticker.ScalarFormatter(useMathText=True))
 plt.ticklabel_format(style='sci', axis='y', scilimits=(0, 0))
 
 # Salvar e mostrar
-plt.ticklabel_format(style='plain', axis='y')
+# plt.ticklabel_format(style='plain', axis='y')
 plt.tight_layout()
 plt.savefig(arquivo_saida, dpi=300)
 plt.show()
