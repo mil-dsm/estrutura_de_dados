@@ -105,13 +105,24 @@ plt.plot(
 plt.xlabel("Tamanho do Vetor", fontsize=14, fontweight='bold')
 plt.ylabel("Microssegundos", fontsize=14, fontweight='bold')
 plt.title("Comparativo de Desempenho dos Algoritmos de Ordenação", fontsize=16, fontweight='bold')
-plt.grid(True, linestyle='--', alpha=0.6)
+plt.grid(True, which='both', linestyle='--', alpha=0.6)
 plt.xticks(fontsize=12)
 plt.yticks(fontsize=12)
+
+# Legenda fora da área, sem cortar
 plt.legend(fontsize=12, loc='upper left', bbox_to_anchor=(1,1))
 
-# Formatação dos números
-plt.ticklabel_format(style='plain', axis='y')
+# Escala log com rótulos 10^k
+from matplotlib.ticker import LogLocator, LogFormatterMathtext, NullFormatter
+ax = plt.gca()
+ax.set_yscale('log')
+
+# Ticks maiores em potências de 10, menores entre elas
+ax.yaxis.set_major_locator(LogLocator(base=10))
+ax.yaxis.set_major_formatter(LogFormatterMathtext())  # mostra 10^3, 10^4...
+ax.yaxis.set_minor_locator(LogLocator(base=10, subs=range(2,10)))
+ax.yaxis.set_minor_formatter(NullFormatter())
+
 plt.tight_layout()
-plt.savefig(arquivo_saida, dpi=300)
+plt.savefig(arquivo_saida, dpi=300, bbox_inches='tight')
 plt.show()
