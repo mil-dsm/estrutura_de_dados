@@ -38,14 +38,6 @@ t_selection, tempo_selection = ler_dados(arquivo_selection)
 t_merge, tempo_merge = ler_dados(arquivo_merge)
 t_quick, tempo_quick = ler_dados(arquivo_quick)
 
-# Converter segundos para microssegundos (opcional)
-tempo_bubble   = [t * 1e6 for t in tempo_bubble]
-tempo_oddeven  = [t * 1e6 for t in tempo_oddeven]
-tempo_insertion = [t * 1e6 for t in tempo_insertion]
-tempo_selection = [t * 1e6 for t in tempo_selection]
-tempo_merge    = [t * 1e6 for t in tempo_merge]
-tempo_quick    = [t * 1e6 for t in tempo_quick]
-
 # Criar o gráfico
 plt.figure(figsize=(12,7))
 
