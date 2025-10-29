@@ -28,8 +28,8 @@ with open(arquivo_entrada, 'r') as f:
 plt.figure(figsize=(12,7))
 plt.plot(
     tamanhos, tempos, 
-    color='#1f77b4',     # cor azul moderna
-    marker='o',          # marcador circular
+    color='#ff7f0e',
+    marker='s',          # marcador circular
     markersize=6,        # tamanho do marcador
     linestyle='-',       # linha sólida
     linewidth=2,         # espessura da linha
@@ -46,6 +46,7 @@ plt.yticks(fontsize=12)
 plt.legend(fontsize=12)
 
 # Salvar o gráfico em PNG
+plt.ticklabel_format(style='plain', axis='y')
 plt.tight_layout()
 plt.savefig(arquivo_saida, dpi=300)
 plt.show()
