@@ -31,6 +31,7 @@ def ler_dados(caminho):
 t_bubble, tempo_bubble = ler_dados(arquivo_bubble)
 t_insertion, tempo_insertion = ler_dados(arquivo_insertion)
 t_selection, tempo_selection = ler_dados(arquivo_selection)
+t_oddeven, tempo_oddeven = ler_dados(arquivo_oddeven)
 
 # Criar o gráfico
 plt.figure(figsize=(12,7))
@@ -47,8 +48,8 @@ plt.plot(
 
 plt.plot(
     t_insertion, tempo_insertion,
-    color='#2ca02c',   # vermelho
-    marker='^',        # quadrado
+    color='#2ca02c',   # verde
+    marker='^',
     markersize=6,
     linestyle='-',
     linewidth=2,
@@ -57,8 +58,8 @@ plt.plot(
 
 plt.plot(
     t_selection, tempo_selection,
-    color='#d62728',   # roxo
-    marker='v',        # quadrado
+    color='#d62728',   # vermelho
+    marker='v',
     markersize=6,
     linestyle='-',
     linewidth=2,
