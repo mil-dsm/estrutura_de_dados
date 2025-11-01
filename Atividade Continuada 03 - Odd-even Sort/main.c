@@ -59,10 +59,10 @@ void OddEvenSort(int n, int A[]){
 // "empurrado" para o final, como bolhas subindo à superfície.
 // Entrada: tamanho 'n' do vetor, vetor 'A[0...n-1]'.
 // Saída: vetor ordenado em ordem crescente;
-void BubbleSort(int n, int A[]) {   
-    for (int i = 0; i < n-1; ++i) {
-		for (int j = n-1; j > i; --j) { // j percorre o vetor decrescendo até i
-			if (A[j] < A[j-1]) { // Se A[j] for maior que o anterior, trocam de posição
+void BubbleSort(int n, int A[]){   
+    for(int i = 0; i < n-1; ++i){
+		for(int j = n-1; j > i; --j){ // j percorre o vetor decrescendo até i
+			if(A[j] < A[j-1]){ // Se A[j] for maior que o anterior, trocam de posição
 				int aux = A[j];
 				A[j] = A[j-1];
 				A[j-1] = aux;  
@@ -120,7 +120,7 @@ void SelectionSort(int n, int A[]){
 // Saída: vetor 'A[p...r]' reorganizado em ordem crescente.
 void Intercala(int A[], int p, int q, int r){
 	int B[r-p+1], i = p, j = q + 1, k = 0;
-	// Intercala A[p...q] e A[q+1...r]
+	// Intercala A[p...q] e A[q+1...r], colocando o valor do menor elemento em B[p...r]
 	while(i <= q && j <= r){
 		if(A[i] <= A[j]){
 			B[k++] = A[i++];
@@ -129,14 +129,14 @@ void Intercala(int A[], int p, int q, int r){
 			B[k++] = A[j++];
 		}
 	}
-	// Caso ainda tenham sobrado números, são copiados para o vetor auxiliar
+	// Caso ainda tenham sobrado números, são copiados para o vetor auxiliar B[p...r]
 	while(i <= q){
 		B[k++] = A[i++];
 	}
 	while(j <= r){
 		B[k++] = A[j++];
 	}
-	// Copia vetor ordenado B para o vetor A
+	// Copia vetor ordenado B[p...r] para o vetor A[p...r]
 	for(int i = p; i <= r; i++){
 		A[i] = B[i-p];
 	}
@@ -149,11 +149,11 @@ void Intercala(int A[], int p, int q, int r){
 // Saída: vetor 'A[p...r]' ordenado em ordem crescente.
 void MergeSort(int A[], int p, int r){
 	if(p < r){
-		int q = (p + r) / 2; // Dividir
-		// Conquistar
+		int q = (p + r) / 2; // Dividir em dois subvetores
+		// Conquistar: ordenar os dois subvetores
 		MergeSort(A, p, q);
 		MergeSort(A, q+1, r);
-		// Combinar
+		// Combinar os dois subvetores ordenados
 		Intercala(A, p, q, r);
 	}
 }
@@ -166,14 +166,16 @@ void MergeSort(int A[], int p, int r){
 int partition(int A[], int l, int r){
     int pivo = A[r];
     int j = l;
-    for(int i=l; i<r; i++){ // Percorre o vetor e controi dois subvetores dentro, de menores e maiores
+	// Percorre o vetor e constrói dois subvetores dentro, de menores e maiores que o pivô
+    for(int i=l; i<r; i++){
         if(A[i] <= pivo){
             int aux = A[i];
             A[i] = A[j];
             A[j++] = aux;
         }
     }
-    A[r] = A[j]; // Atualiza-se a posição do vetor
+	// Atualiza-se a posição do vetor do pivô
+    A[r] = A[j];
     A[j] = pivo;
     return j;
 }

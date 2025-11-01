@@ -28,7 +28,7 @@ with open(arquivo_entrada, 'r') as f:
 plt.figure(figsize=(12,7))
 plt.plot(
     tamanhos, tempos, 
-    color='#1f77b4',     # cor azul moderna
+    color='#1f77b4',     # azul
     marker='o',          # marcador circular
     markersize=6,        # tamanho do marcador
     linestyle='-',       # linha sólida

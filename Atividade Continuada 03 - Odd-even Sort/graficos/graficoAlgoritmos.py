@@ -43,61 +43,61 @@ plt.figure(figsize=(12,7))
 
 plt.plot(
     t_bubble, tempo_bubble,
-    color='#1f77b4',
-    marker='o',
-    markersize=6,
-    linestyle='-',
-    linewidth=2,
+    color='#1f77b4',     # azul
+    marker='o',          # marcador circular
+    markersize=6,        # tamanho do marcador
+    linestyle='-',       # linha sólida
+    linewidth=2,         # espessura da linha
     label='Bubble Sort'
 )
 
 plt.plot(
     t_oddeven, tempo_oddeven,
-    color='#ff7f0e',
-    marker='s',
-    markersize=6,
-    linestyle='-',
-    linewidth=2,
+    color='#ff7f0e',     # laranja
+    marker='s',          # marcador quadrado
+    markersize=6,        # tamanho do marcador
+    linestyle='-',       # linha sólida
+    linewidth=2,         # espessura da linha
     label='Odd-even Sort'
 )
 
 plt.plot(
     t_insertion, tempo_insertion,
-    color='#2ca02c',
-    marker='^',
-    markersize=6,
-    linestyle='-',
-    linewidth=2,
+    color='#2ca02c',     # verde
+    marker='^',          # marcador triangular
+    markersize=6,        # tamanho do marcador
+    linestyle='-',       # linha sólida
+    linewidth=2,         # espessura da linha
     label='Insertion Sort'
 )
 
 plt.plot(
     t_selection, tempo_selection,
-    color='#d62728',
-    marker='v',
-    markersize=6,
-    linestyle='-',
-    linewidth=2,
+    color='#d62728',     # vermelho
+    marker='v',          # marcador triangular invertido
+    markersize=6,        # tamanho do marcador
+    linestyle='-',       # linha sólida
+    linewidth=2,         # espessura da linha
     label='Selection Sort'
 )
 
 plt.plot(
     t_merge, tempo_merge,
-    color='#9467bd',
-    marker='>',
-    markersize=6,
-    linestyle='-',
-    linewidth=2,
+    color='#9467bd',     # roxo
+    marker='>',          # marcador de seta para a direita
+    markersize=6,        # tamanho do marcador
+    linestyle='-',       # linha sólida
+    linewidth=2,         # espessura da linha
     label='Merge Sort'
 )
 
 plt.plot(
     t_quick, tempo_quick,
-    color='#8c564b',
-    marker='<',
-    markersize=6,
-    linestyle='-',
-    linewidth=2,
+    color='#8c564b',     # marrom
+    marker='<',          # marcador de seta para a esquerda
+    markersize=6,        # tamanho do marcador
+    linestyle='-',       # linha sólida
+    linewidth=2,         # espessura da linha
     label='Quick Sort'
 )
 

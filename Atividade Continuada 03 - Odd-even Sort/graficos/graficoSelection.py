@@ -28,8 +28,8 @@ with open(arquivo_entrada, 'r') as f:
 plt.figure(figsize=(12,7))
 plt.plot(
     tamanhos, tempos, 
-    color='#d62728',
-    marker='v',          # marcador circular
+    color='#d62728',     # vermelho
+    marker='o',          # marcador circular
     markersize=6,        # tamanho do marcador
     linestyle='-',       # linha sólida
     linewidth=2,         # espessura da linha

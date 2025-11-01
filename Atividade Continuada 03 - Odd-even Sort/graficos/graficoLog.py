@@ -37,7 +37,7 @@ plt.figure(figsize=(12,7))
 # 🔹 Merge Sort
 plt.plot(
     t_merge, tempo_merge,
-    color='#ff7f0e',   # laranja
+    color='#9467bd',     # roxo
     linestyle='-',
     linewidth=2,
     label='MergeSort (O(n log n))'
@@ -46,7 +46,7 @@ plt.plot(
 # 🔹 Quick Sort
 plt.plot(
     t_quick, tempo_quick,
-    color='#2ca02c',   # verde
+    color='#8c564b',     # marrom
     linestyle='-',
     linewidth=2,
     label='QuickSort (O(n log n))'
