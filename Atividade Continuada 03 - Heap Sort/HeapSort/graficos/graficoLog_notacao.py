@@ -31,6 +31,7 @@ def ler_dados(caminho):
 # Ler os dados
 t_merge, tempo_merge = ler_dados(arquivo_merge)
 t_quick, tempo_quick = ler_dados(arquivo_quick)
+t_heap, tempo_heap = ler_dados(arquivo_heap)
 
 # Criar o gráfico
 plt.figure(figsize=(12,7))
@@ -51,6 +52,16 @@ plt.plot(
     linestyle='-',
     linewidth=2,
     label='QuickSort (O(n log n))'
+)
+
+plt.plot(
+    t_heap, tempo_heap,
+    color='#ff7f0e',     # laranja
+    marker='s',          # marcador quadrado
+    markersize=6,        # tamanho do marcador
+    linestyle='-',       # linha sólida
+    linewidth=2,         # espessura da linha
+    label='Heap Sort'
 )
 
 # Estilo do gráfico
