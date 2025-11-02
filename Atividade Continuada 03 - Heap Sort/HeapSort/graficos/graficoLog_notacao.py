@@ -57,7 +57,6 @@ plt.plot(
 plt.plot(
     t_heap, tempo_heap,
     color='#ff7f0e',     # laranja
-    marker='s',          # marcador quadrado
     markersize=6,        # tamanho do marcador
     linestyle='-',       # linha sólida
     linewidth=2,         # espessura da linha

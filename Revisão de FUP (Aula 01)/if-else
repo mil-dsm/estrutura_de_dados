@@ -1,0 +1,10 @@
+//Se uma condição for verdadeira, executa o bloco de código
+
+int main(){
+    int c;
+    scanf("%d", &c);
+    if(c == 1){
+        printf("Igual a 1.\n");
+    }
+    return 0;
+}

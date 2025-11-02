@@ -9,7 +9,7 @@ arquivo_insertion = os.path.join(diretorio_script, "../resultados/resultadoInser
 arquivo_selection = os.path.join(diretorio_script, "../resultados/resultadoSelection.txt")
 arquivo_merge = os.path.join(diretorio_script, "../resultados/resultadoMerge.txt")
 arquivo_quick = os.path.join(diretorio_script, "../resultados/resultadoQuick.txt")
-arquivo_saida = os.path.join(diretorio_script, "comparativoAlgoritmos.png")
+arquivo_saida = os.path.join(diretorio_script, "comparativoAlgoritmos2.png")
 
 # Função para ler arquivo com duas colunas
 def ler_dados(caminho):
