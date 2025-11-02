@@ -1,10 +1,14 @@
-#include <stdio.h>
-
+// Algoritmo Insertion Sort é uma função que promete ordenar um vetor A[0...n-1]
+// de forma crescente, inserindo cada elemento em sua posição correta dentro
+// do subvetor já ordenado à esquerda. O processo é feito por comparações com
+// os elementos anteriores e deslocamentos até encontrar o local apropriado.
+// Entrada: tamanho 'n' do vetor, vetor 'A[0...n-1]'.
+// Saída: vetor ordenado em ordem crescente.
 void InsertionSort(int n, int A[]){
     for(int j=1; j<n; j++){
-        int key = A[j];
+        int key = A[j]; // Decidi-se a chave para comparações
         int i = j - 1;
-        while(i >= 0 && A[i] > key){
+        while(i >= 0 && A[i] > key){ // Se A[i] for maior que a chave e i for maior ou igual a 0, A[i] muda de lugar
             A[i+1] = A[i];
             i--;
         }
