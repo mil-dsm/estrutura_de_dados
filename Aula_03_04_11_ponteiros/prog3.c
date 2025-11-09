@@ -1,14 +1,23 @@
 #include <stdio.h>
 
 int main(){
-    int *ptr = NULL;
-    *ptr = 2023; // Erro: falha de segmentacao
-    printf("Valor apontado por ptr = %d\n", *ptr);
+    // Declara uma variavel int contendo o valor 10
+    int count = 10;
+     
+    // Declara um ponteiro para int e atribui ao ponteiro
+    // o endereco da variavel int
+    int *p;
+    p = &count;
+    printf("Conteudo de p: %p\n", p);
+    //Imprime 10
+    printf("Conteudo apontado por p: %d\n", *p);
+    
+    // Atribui um novo valor a posicao de memoria apontada por p
+    *p = 12;
 
-    if(ptr != NULL){
-        *ptr = 2023; // ptr nao eh nulo
-        printf("Valor apontado por ptr = %d\n", *ptr);
-    }else{
-        printf("Ponteiro nulo.\n");
-    }
+    // As duas linhas abaixo imprimem o numero 12 na tela
+    printf("Conteudo apontado por p: %d\n", *p);
+    printf("Conteudo de count: %d\n", count);
+
+    return 0;
 }

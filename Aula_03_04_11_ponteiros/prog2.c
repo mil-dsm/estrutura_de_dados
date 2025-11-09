@@ -1,8 +1,14 @@
 #include <stdio.h>
 
+// Manipulando ponteiros
+
 int main(){
-    float f = 47.78;
-    int *ptr = &f; // Erro de compilacao
-    int i = 54;
-    float *f2 = &i; // Erro de compilacao
+    int count = 10;
+    int *p;
+    p = &count;
+    printf("Conteudo de p: %p\n", p);
+    printf("Conteudo apontado por p: %d\n", *p);
+    *p = 12;
+    printf("Conteudo apontado por p: %d\n", *p);
+    printf("Conteudo apontado de count: %d\n", count);
 }

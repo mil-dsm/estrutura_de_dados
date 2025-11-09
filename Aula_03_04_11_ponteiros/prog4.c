@@ -1,17 +1,8 @@
 #include <stdio.h>
 
-void dobra(int x){
-    x *= 2;
-}
-
-void dobre_ptr(int *p){
-    *p *= 2;
-}
-
 int main(){
-    int a =3;
-    dobra(a);
-    printf("Funcao (dobra) = %d\n", a);
-    dobra_ptr(&a);
-    printf("Funcao (dobre_ptr) = %d\n", a);
+    float f = 47.78;
+    int *ptr = &f; // Erro de compilacao
+    int i = 54;
+    float *f2 = &i; // Erro de compilacao
 }
