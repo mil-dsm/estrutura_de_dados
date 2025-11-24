@@ -35,32 +35,35 @@ aba xzxb ab
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
-void matchingStrings(char [][50], int, char [][50], int, int []);
+typedef struct {
+    char lista[1000][50];
+    int tamanho;
+} ListaStrings;
+
+int* matchingStrings(ListaStrings, ListaStrings);
 
 int main() {
-    int nConsultas;
-    scanf("%d", &nConsultas);
-    // Cria um vetor bidimensional de char: cada linha armazena uma string de até 50 caracteres
-    char consultas[nConsultas][50];
-    for(int i = 0; i < nConsultas; i++) {
-        scanf("%s", consultas[i]);
+    ListaStrings consultas, strings;
+    scanf("%d", &consultas.tamanho);
+    for(int i = 0; i < consultas.tamanho; i++) {
+        scanf("%s", consultas.lista[i]);
     }
-    int nStrings;
-    scanf("%d", &nStrings);
-    // Cria um vetor bidimensional de char: cada linha armazena uma string de até 50 caracteres
-    char strings[nStrings][50];
-    for(int i = 0; i < nStrings; i++) {
-        scanf("%s", strings[i]);
+    scanf("%d", &strings.tamanho);
+    for(int i = 0; i < strings.tamanho; i++) {
+        scanf("%s", strings.lista[i]);
     }
     
     // Vetor que armazena os resultados das ocorrencias e comparacoes
-    int resultados[nStrings];
-    matchingStrings(consultas, nConsultas, strings, nStrings, resultados);
-    for(int i = 0; i < nStrings; i++) {
+    int *resultados = matchingStrings(consultas, strings);
+
+    for(int i = 0; i < strings.tamanho; i++) {
         printf("%d", resultados[i]);
-        printf((i < nStrings - 1) ? " " : "\n");
+        printf((i < strings.tamanho - 1) ? " " : "\n");
     }
+
+    free(resultados);
     
     return 0;
 }
@@ -68,16 +71,16 @@ int main() {
 // Compara cada string de s2 com todas as strings de s1
 // s1: vetor com n1 strings
 // s2: vetor com n2 strings
-// resultados[i]: quantidade de vezes que s2[i] aparece em s1
-void matchingStrings(char s1[][50], int n1, char s2[][50], int n2, int resultados[]) {
-    for(int i = 0; i < n2; i++) {
-        int cont = 0;
-        for(int j = 0; j < n1; j++) {
-            if(strcmp(s2[i], s1[j]) == 0) {
-                cont++;
+int* matchingStrings(ListaStrings consultas, ListaStrings strings) {
+    int *resultados = malloc(strings.tamanho * sizeof(int));
+    for(int i = 0; i < strings.tamanho; i++) {
+        resultados[i] = 0;
+        for(int j = 0; j < consultas.tamanho; j++) {
+            if(strcmp(strings.lista[i], consultas.lista[j]) == 0) {
+                resultados[i]++;
             }
         }
-        resultados[i] = cont;
-        
     }
+
+    return resultados;
 }

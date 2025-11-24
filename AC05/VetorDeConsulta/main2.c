@@ -35,9 +35,8 @@ aba xzxb ab
 
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
 
-int* matchingStrings(char [][50], int, char [][50], int);
+void matchingStrings(char [][50], int, char [][50], int, int []);
 
 int main() {
     int nConsultas;
@@ -56,14 +55,12 @@ int main() {
     }
     
     // Vetor que armazena os resultados das ocorrencias e comparacoes
-    int *resultados = matchingStrings(consultas, nConsultas, strings, nStrings);
-
+    int resultados[nStrings];
+    matchingStrings(consultas, nConsultas, strings, nStrings, resultados);
     for(int i = 0; i < nStrings; i++) {
         printf("%d", resultados[i]);
-        printf((i < nConsultas - 1) ? " " : "\n");
+        printf((i < nStrings - 1) ? " " : "\n");
     }
-
-    free(resultados);
     
     return 0;
 }
@@ -71,16 +68,16 @@ int main() {
 // Compara cada string de s2 com todas as strings de s1
 // s1: vetor com n1 strings
 // s2: vetor com n2 strings
-int* matchingStrings(char s1[][50], int n1, char s2[][50], int n2) {
-    int *resultados = malloc(n2 * sizeof(int));
+// resultados[i]: quantidade de vezes que s2[i] aparece em s1
+void matchingStrings(char s1[][50], int n1, char s2[][50], int n2, int resultados[]) {
     for(int i = 0; i < n2; i++) {
-        resultados[i] = 0;
+        int cont = 0;
         for(int j = 0; j < n1; j++) {
             if(strcmp(s2[i], s1[j]) == 0) {
-                resultados[i]++;
+                cont++;
             }
         }
+        resultados[i] = cont;
+        
     }
-
-    return resultados;
 }
