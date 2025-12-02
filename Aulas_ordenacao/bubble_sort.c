@@ -15,4 +15,3 @@ void BubbleSort(int n, int A[]){
 		}
 	}
 }
-

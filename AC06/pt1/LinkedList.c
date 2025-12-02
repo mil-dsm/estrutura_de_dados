@@ -71,7 +71,8 @@ Node* list_concatenar(Node *p1, Node *p2) {
     if(p1 == NULL) {
         return p2;
     }
-    for(Node *aux = p1; aux != NULL; aux = aux->next);
+    Node *aux = p1;
+    while(aux->next != NULL) aux = aux->next;
     aux->next = p2;
     return p1;
 }
@@ -82,20 +83,24 @@ Node* list_concatenar(Node *p1, Node *p2) {
 // elas não compartilham nós. As duas listas são independentes.
 // Ou seja, essa função cria um clone da lista original e retorna o clone.
 Node* list_clone(Node *p) {
-    Node *clone = (Node *)malloc(sizeof(Node));
-    clone->data = p->data;
-    clone->next = NULL;
-    Node *aux_p = p->next;
-    Node *aux_clone = clone;
+    if(p == NULL) {
+        return NULL;
+    }
 
-    while() {  
+    Node *clone = (Node *)malloc(sizeof(Node));
+    clone->data = p->data; // Copia o primeiro elemento 
+    clone->next = NULL;
+    Node *aux_p = p->next; // Inicializa variavel auxiliar que percorre a lista original no segundo elemento, pois ja copiou o primeiro
+    Node *aux_clone = clone; // Inicializa variavel auxiliar que percorre a lista clone
+
+    while(aux_p != NULL) { // Continua ate nao ter mais o que clonar
         Node *novo = (Node *)malloc(sizeof(Node));
         novo->data = aux_p->data;
         novo->next = NULL;
 
-        aux_clone->next = novo;
-        aux_clone = novo;
-        aux_p = aux_ofc->next;
+        aux_clone->next = novo; // Liga o clone
+        aux_clone = novo; // Avanca no clone
+        aux_p = aux_p->next; // Avanca no original
     }
 
     return clone;
@@ -108,16 +113,25 @@ Node* list_clone(Node *p) {
 // Antes de liberar o nó você deve imprimir "liberado: %d" e coloca o valor do nó liberado.
 // Retorna a lista modificada.
 Node* list_remove_todos(Node *p, int val) {
-    Node *aux = p;
-    while(aux != NULL) {
-        if(aux->data == val) {
-            Node *temp = (Node *)malloc(sizeof(Node));
-            temp->next = aux->next;
-            free(aux);
-            aux->next = temp->next;
-        }
-        aux = aux->next;
+    while(p != NULL && p->data == val) {
+        Node *temp = p;
+        p = p->next;
+        printf("liberado: %d\n", temp->data);
+        free(temp);
     }
+    if(p == NULL) return NULL;
+    Node *atual = p;
+    while(atual->next != NULL) {
+        if(atual->next->data == val) {
+            Node *temp = atual->next;
+            atual->next = temp->next;
+            printf("liberado: %d\n", temp->data);
+            free(temp);
+        } else {
+            atual = atual->next;
+        }
+    }
+    return p;
 }
 
 // Esta função retorna true se as duas listas são idênticas; ou
@@ -142,16 +156,5 @@ bool list_sao_iguais(Node* p1, Node *p2) {
 // retorna false caso contrário.
 // Duas listas são diferentes se elas não são idênticas.
 bool list_sao_diferentes(Node* p1, Node *p2) {
-    Node *aux_1 = p1, *aux_2 = p2;
-    while(aux_1 != NULL && aux_2 != NULL) {
-        if(aux_1->data != aux_2->data) {
-            return true;
-        }
-        aux_1 = aux_1->next;
-        aux_2 = aux_2->next;
-    }
-    if(aux_1 == NULL && aux_2 == NULL) {
-        return false;
-    }
-    return true;
+    return !list_sao_iguais(p1, p2);
 }
