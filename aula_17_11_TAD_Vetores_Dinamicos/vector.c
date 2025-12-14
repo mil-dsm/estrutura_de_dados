@@ -44,14 +44,14 @@ void vector_free(Vector *v) {
     }
 }
 
-// Outra implementação
-Vector* vector_free(Vector *v) {
-    if(v != NULL) {
-        free(v->data);
-        free(v);
-        return NULL
-    }
-}
+// // Outra implementação
+// Vector* vector_free(Vector *v) {
+//     if(v != NULL) {
+//         free(v->data);
+//         free(v);
+//         return NULL
+//     }
+// }
 
 // Ajusta a capacidade do vetor para que seja igual a new_capacity.
 // Se o ponteiro for nulo, então retorna ERROR_NULL_POINTER.
