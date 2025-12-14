@@ -15,7 +15,6 @@ struct vector {
 // o tamanho do array não ultrapassou o máximo permitido.
 #define size_check(n,type) ((n) <= (SIZE_MAX / sizeof(type)))
 
-
 //  implementar as funções da biblioteca
 
 // Aloca memória para um vetor vazio com capacidade para 1 elemento.
