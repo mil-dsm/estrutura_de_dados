@@ -1,7 +1,6 @@
-#ifndef QUEUE_H
-#define QUEUE_H
+#ifndef QUEUE_STACK_H
+#define QUEUE_STACK_H
 
-typedef struct node Node;
 typedef struct queue Queue;
 
 /*Ideia geral

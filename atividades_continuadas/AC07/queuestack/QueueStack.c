@@ -2,12 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "Stack.h"
-#include "Queue.h"
-
-struct node {
-    int data;
-    struct node *next;
-};
+#include "QueueStack.h"
 
 /*Ideia geral
 in recebe todos os enqueue

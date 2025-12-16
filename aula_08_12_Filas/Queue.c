@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include "Queue.h"
 
-
 // Definição do struct Node
 struct node {
     int value;

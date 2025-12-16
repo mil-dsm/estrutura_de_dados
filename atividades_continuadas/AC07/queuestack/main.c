@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "Stack.h"
-#include "Queue.h"
+#include "QueueStack.h"
 
 int main() {
     Queue *fila = queue_create();
