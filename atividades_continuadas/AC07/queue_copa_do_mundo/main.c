@@ -1,3 +1,61 @@
+/*
+Dados os resultados dos quinze jogos da Fase Final, escreva um programa que determine a equipe campeã.
+
+Entrada
+A entrada é composta de quinze linhas, cada uma contendo o resultado de um jogo. A primeira linha contém o resultado do jogo de número 1, a segunda linha o resultado do jogo de número 2, e assim por diante. O resultado de um jogo é representado por dois números inteiros MM e NN separados por um espaço em branco, indicando respectivamente o número de gols da equipe representada à esquerda e à direita na tabela de jogos.
+
+Saída
+Seu programa deve imprimir uma única linha, contendo a letra identificadora da equipe campeã.
+
+Entradas de amostra
+>>>>>>>> 01
+4 1 
+1 0 
+0 4 
+3 1 
+2 3 
+1 2 
+2 0 
+0 2 
+1 2 
+4 3 
+0 1 
+3 2 
+3 4 
+1 4 
+1 0
+========
+F
+<<<<<<<<
+
+>>>>>>>> 02
+2 0 
+1 0 
+2 1 
+1 0 
+1 0 
+1 2 
+1 2 
+1 0 
+2 1 
+1 0 
+0 1 
+0 2 
+2 1 
+1 0 
+2 1
+========
+A
+<<<<<<<<
+Dica
+Coloque as 16 letras em uma fila
+Pegue as duas primeiras
+que no caso seriam A e B
+leia os gols
+decida quem você coloca de novo na fila
+Continue até que só existe um elemento na fila
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -5,22 +63,28 @@
 
 int main(void) {
     Queue *q = queue_create();
-    Queue *aux = queue_create();
+
     for(int i = 0; i < 16; i++) {
         queue_push(q, 'A'+ i);
     }
-    for(int i = 0; i < 15; i++) {
+
+    while(queue_size(q) > 1){
         int x, y;
         scanf("%d%d", &x, &y);
-        queue_push(aux, x);
-        queue_push(aux, y);
-    }
-    while(!queue_empty(q)) {
-        int x = queue_front(aux);
-        queue_pop(aux);
-        int y = queue_front(aux);
-        queue_pop(aux);
         if(x > y) {
+            char c = queue_front(q);
+            queue_pop(q);
+            queue_pop(q);
+            queue_push(q, c);
+        } else {
+            queue_pop(q);
+            char c = queue_front(q);
+            queue_pop(q);
+            queue_push(q, c);
         }
     }
+    printf("%c\n", queue_front(q));
+    queue_empty(q);
+
+    return 0;
 }

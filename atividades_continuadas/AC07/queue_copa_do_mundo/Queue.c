@@ -3,35 +3,37 @@
 #include <stdbool.h>
 #include "Queue.h"
 
+// Definição do struct Node
 struct node {
-    char data;
+    char value;
     struct node *next;
 };
 
+// Definição do struct queue
 struct queue {
-    size_t size;
     struct node *first;
     struct node *last;
+    size_t size;
 };
 
 // cria fila vazia
 Queue* queue_create(void) {
-    Queue *q = (Queue*)malloc(sizeof(Queue));
-    if(q == NULL) {
-        printf("fail: allocation error.\n");
-        exit(EXIT_FAILURE);
+    Queue *nova_fila = (Queue*)malloc(sizeof(Queue));
+    if(nova_fila == NULL) {
+        printf("fail: empty queue.\n");
+        return NULL;
     }
-    q->size = 0;
-    q->first = NULL;
-    q->last = NULL;
-    return q;
+    nova_fila->first = NULL;
+    nova_fila->last = NULL;
+    nova_fila->size = 0;
+    return nova_fila;
 }
 
 // retorna o tamanho da fila
 size_t queue_size(Queue *q) {
     if(q == NULL) {
         printf("fail: null pointer.\n");
-        exit(EXIT_FAILURE);
+        exit(1);
     }
     return q->size;
 }
@@ -40,99 +42,107 @@ size_t queue_size(Queue *q) {
 bool queue_empty(Queue *q) {
     if(q == NULL) {
         printf("fail: null pointer.\n");
-        exit(EXIT_FAILURE);
+        exit(1);
     }
-    return q->size == 0;
+    return (q->size == 0) ? true : false;
 }
 
 // inserir na fila
 void queue_push(Queue *q, char value) {
-    if(q == NULL) {
+    if(q == NULL){
         printf("fail: null pointer.\n");
-        exit(EXIT_FAILURE);
+        exit(1);
     }
-    Node *novo = (Node*)malloc(sizeof(Node));
-    if(novo == NULL) {
+    Node* node = malloc(sizeof(*node));
+    if(node == NULL){
         printf("fail: allocation error.\n");
-        exit(EXIT_FAILURE);
+        exit(1);
     }
-    novo->data = value;
-    novo->next = NULL;
-    if(q->size == 0) {
-        q->first = novo;
-        q->last = novo;
-    } else {
-        q->last->next = novo;
-        q->last = novo;
+    node->value = value;
+    node->next = NULL;
+    if(queue_empty(q)){
+        q->last = node;
+        q->first = q->last;
+    }else{
+        q->last->next = node;
+        q->last = node;
     }
     q->size++;
 }
 
-// remover da fila
+// remover da fila: FIFO: first-in first-out
 void queue_pop(Queue *q) {
-    if(q == NULL) {
+    if(q == NULL){
         printf("fail: null pointer.\n");
-        exit(EXIT_FAILURE);
+        exit(1);
     }
-    if(q->size == 0) {
-        printf("fail: empty queue.\n");
-        exit(EXIT_FAILURE);
-    }
-    Node *temp = q->first;
-    q->first = temp->next;
-    free(temp);
-    if(q->first == NULL) {
+    if(q->size == 1) { // Fila com 1 elemento
+        free(q->first);
+        q->first = NULL;
         q->last = NULL;
+        q->size--;
+    } else if(q->size > 1) { // Fila com pelo menos 2 elementos
+        Node *x = q->first;
+        q->first = x->next;
+        free(x);
+        q->size--;
     }
-    q->size--;
 }
 
 // retorna o valor do elemento no início da fila
 char queue_front(Queue *q) {
-    if(q == NULL) {
+    if(q == NULL){ // caso ponteiro nulo
         printf("fail: null pointer.\n");
-        exit(EXIT_FAILURE);
+        exit(1);
     }
-    if(q->size == 0) {
+    if(queue_empty(q)) { // caso fila vazia
         printf("fail: empty queue.\n");
-        exit(EXIT_FAILURE);
-    }
-    return q->first->data;
+        exit(1);
+    } 
+    // caso fila não vazia
+    return q->first->value;
 }
 
 // retorna o valor do elemento no final da fila
 char queue_back(Queue *q) {
-    if(q == NULL) {
+    if(q == NULL){ // caso ponteiro nulo
         printf("fail: null pointer.\n");
-        exit(EXIT_FAILURE);
+        exit(1);
     }
-    if(q->size == 0) {
+    if(queue_empty(q)) { // caso fila vazia
         printf("fail: empty queue.\n");
-        exit(EXIT_FAILURE);
-    }
-    return q->last->data;
+        exit(1);
+    } 
+    // caso fila não vazia
+    return q->last->value;
 }
 
 // troca o conteúdo das duas filas
-void queue_swap(Queue *q1, Queue *q2) {
-    if(q1 == NULL || q2 == NULL) {
-        printf("fail: null pointer.\n");
-        exit(EXIT_FAILURE);
-    }
+// Complexidade: O(1)
+void queue_swap_v1(Queue *q1, Queue *q2) {
     Queue aux = *q1;
+    *q1 = *q2;
+    *q2 = aux;
+}
+
+void queue_swap_v2(Queue **q1, Queue **q2) {
+    Queue aux = **q1;
+    **q1 = **q2;
+    **q2 = aux;
+}
+
+void queue_swap_v3(Queue **q1, Queue **q2) {
+    Queue *aux = *q1;
     *q1 = *q2;
     *q2 = aux;
 }
 
 // libera toda a memória que foi alocada para a fila
 void queue_free(Queue *q) {
-    if(q != NULL) {
-        Node *aux = q->first;
-        while(aux != NULL) {
-            Node *temp = aux->next;
-            free(aux);
-            aux = temp;
-        }
-        free(q);
+    if(q == NULL) return;
+    while(!queue_empty(q)) {
+        char v = queue_front(q);
+        queue_pop(q);
     }
+    free(q);
 }
