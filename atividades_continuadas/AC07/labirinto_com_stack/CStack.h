@@ -4,6 +4,10 @@
 // declaração dos tipos opacos
 typedef struct cnode CNode;
 typedef struct cstack CStack;
+typedef struct {
+    int l;
+    int c;
+} Posicao;
 
 // cria uma pilha vazia
 CStack* cstack_create(void);
@@ -14,10 +18,10 @@ size_t cstack_size(CStack *p);
 // retorna true se a pilha estiver vazia; ou false caso contrário
 bool cstack_empty(CStack *p);
 
-// Empilha um elemento na pilha
+// Empilha um elemento no topo da pilha
 void cstack_push(CStack *p, Posicao value);
 
-// Desempilha um elemento da pilha
+// Desempilha o elemento no topo da pilha
 void cstack_pop(CStack *p);
 
 // Retorna o valor do elemento no topo da pilha

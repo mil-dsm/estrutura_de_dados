@@ -1,10 +1,10 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include "CStack.h"
 
 struct cnode {
-    char value;
+    Posicao value;
     struct cnode *next;
 };
 
@@ -44,7 +44,7 @@ bool cstack_empty(CStack *p) {
 }
 
 // Empilha um elemento no topo da pilha
-void cstack_push(CStack *p, char value) {
+void cstack_push(CStack *p, Posicao value) {
     if(p == NULL) {
         printf("erro: falha na alocação.\n");
         exit(EXIT_FAILURE);
@@ -54,9 +54,9 @@ void cstack_push(CStack *p, char value) {
         printf("erro: falha de alocação.\n");
         return;
     }
-    node->value = value;
-    node->next = p->top;
-    p->top = node;
+    novo->value = value;
+    novo->next = p->top;
+    p->top = novo;
     p->size++;
 }
 
@@ -68,14 +68,14 @@ void cstack_pop(CStack *p) {
     }
     if(!cstack_empty(p)) {
         CNode *aux = p->top;
-        p->top = aux->next;
+        p->top = p->top->next;
         free(aux);
         p->size--;
     }
 }
 
 // Retorna o valor do elemento no topo da pilha
-char cstack_top(CStack *p) {
+Posicao cstack_top(CStack *p) {
     if(p == NULL) {
         printf("erro: falha na alocação.\n");
         exit(EXIT_FAILURE);

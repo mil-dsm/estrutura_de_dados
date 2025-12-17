@@ -136,46 +136,42 @@ oo.oo.#.ooo.###........ooo.oo.oooo.ooo..
 #include <stdbool.h>
 #include "CStack.h"
 
-typedef struct {
-    int l;
-    int c;
-} Posicao;
-
 bool pode_queimar(int l, int c, int nl, int nc, char mat[nl][nc]) {
     // Verificar se está fora dos limiter da matriz
     if(l < 0 || l >= nl) return false;
     if(c < 0 || c >= nc) return false;
-    return mat[l][c] == '#';
+    return mat[l][c] == '#'; // retorna true se for uma árvore não queimada
 }
 
 int main() {
     int nl, nc, l, c;
     scanf("%d%d%d%d", &nl, &nc, &l, &c);
     char mat[nl][nc];
-    for(int i = 0; i < nl; i++) {
-        for(int j = 0; j < nc; j++) {
-            scanf("%s", mat[i][j]);
-        }
-    }
+    for(int i = 0; i < nl; i++)
+        for(int j = 0; j < nc; j++)
+            scanf(" %c", &mat[i][j]);
+
     // Se posição inicial não for árvore, não faz nada
-    if(mat[0][0] != '#') {
-        for (int i = 0; i < nl; i++)
-        printf("%s\n", mat[i]);
+    if(mat[l][c] != '#') {
+        for(int i = 0; i < nl; i++) {
+            for(int j = 0; j < nc; j++)
+                printf("%c", mat[i][j]);
+            printf("\n");
+        }
         return 0;
     }
-
-    Stack p = stack_create();
+    CStack *p = cstack_create();
 
     // Queima a primeira posição
-    mat[0][0] = 'o';
+    mat[l][c] = 'o';
     Posicao inicio;
-    inicio.l = 0;
-    inicio.c = 0;
+    inicio.l = l;
+    inicio.c = c;
     cstack_push(p, inicio);
 
-    while(stack_empty(p) == false) {
-        Posicao atual = stack_top(p);
-        bool flag = false; // Caso verdadeira, significa que achou um vizinho da posição atual
+    while(cstack_empty(p) == false) {
+        Posicao atual = cstack_top(p);
+        bool flag = false; // Caso verdadeira, significa que achou uma árvore vizinha
 
         // Verificando ao norte
         if(pode_queimar(atual.l - 1, atual.c, nl, nc, mat)) {
@@ -209,7 +205,7 @@ int main() {
     
         // Verificando ao oeste
         else if(pode_queimar(atual.l, atual.c - 1, nl, nc, mat)) {
-            mat[atual.l][atual.c + 1] = 'o'; // Se for possível queimar, marca como queimado
+            mat[atual.l][atual.c - 1] = 'o'; // Se for possível queimar, marca como queimado
             Posicao pos;
             pos.l = atual.l;
             pos.c = atual.c - 1;
@@ -218,15 +214,15 @@ int main() {
         }
 
         if(flag == false)
-            stack_pop(p);
+            cstack_pop(p);
     }
 
     for(int i = 0; i < nl; i++) {
-        for(int j = 0; j < nc; j++) {
+        for(int j = 0; j < nc; j++)
             printf("%c", mat[i][j]);
-        }
+        printf("\n");
     }
 
-    stack_free(p);
+    cstack_free(p);
     return 0;
 }
