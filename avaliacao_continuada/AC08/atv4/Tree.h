@@ -34,17 +34,13 @@ No* arv_deserializar(char *str);
 void arv_mostrar(No *node);
 
 
-// funcao que devolve a soma de todas as chaves de uma arvore binaria.
-int arv_soma_das_chaves(No *raiz);
+// Função que cria uma cópia (um clone) de uma árvore binária.
+No *arv_clone(No *raiz);
 
-//  funcao que devolve o valor da menor chave de uma arvore binaria.
-int arv_chave_minima(No *raiz);
-
-// funcao que conta o numero de nós internos de uma arvore binaria.
-int arv_numero_nos_internos(No *raiz);
-
-// funcao que retorna a quantidade de nós de uma arvore binaria que possuem apenas um filho.
-int arv_um_filho(No *raiz);
-
+// Duas árvores binárias são ditas idênticas quando possuem os 
+// mesmos dados e a disposição dos dados também é a mesma.
+// Escreva uma função recursiva que recebe duas árvores binárias 
+// como entrada e devolve true se elas forem idênticas; e false, caso contrário.
+bool arv_identical(No *raiz1, No *raiz2);
 
 #endif

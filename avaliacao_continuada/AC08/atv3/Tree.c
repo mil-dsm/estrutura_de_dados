@@ -172,56 +172,42 @@ void arv_mostrar(No *node) {
     _mostrar(node, "");
 }
 
-// funcao que devolve a soma de todas as chaves de uma arvore binaria.
-int arv_soma_das_chaves(No *raiz) {
-    if(raiz == NULL) {
-        return 0;
-    } else {
-        return raiz->chave + arv_soma_das_chaves(raiz->esq) +
-            arv_soma_das_chaves(raiz->dir);
-    }
-}
 
-//  funcao que devolve o valor da menor chave de uma arvore binaria.
-int arv_chave_minima(No *raiz) {
-    if(raiz->esq == NULL && raiz->dir == NULL) {
-        return raiz->chave;
-    }
-    // Um filho
-    if(raiz->esq != NULL && raiz->dir == NULL) {
-        int min_sae = arv_chave_minima(raiz->esq);
-        return (raiz->chave < min_sae) ? raiz->chave : min_sae;
-    }
-    if(raiz->esq == NULL && raiz->dir != NULL) {
-        int min_sad = arv_chave_minima(raiz->dir);
-        return (raiz->chave < min_sad) ? raiz->chave : min_sad;
-    }
-    // Dois filhos
-    int min_sae = arv_chave_minima(raiz->esq);
-    int min_sad = arv_chave_minima(raiz->dir);
-    int min = (min_sae < min_sad) ? min_sae : min_sad;
-    return (raiz->chave < min) ? raiz->chave : min;
-}
-
-// funcao que conta o numero de nós internos de uma arvore binaria.
-int arv_numero_nos_internos(No *raiz) {
+// função que conta o número de folhas de uma árvore binária.
+int arv_conta_folhas(No *raiz) {
     if(raiz == NULL) {
         return 0;
     }
     if(raiz->esq == NULL && raiz->dir == NULL) {
-        return 0;
+        return 1;
     }
-    return 1 + arv_numero_nos_internos(raiz->esq) + arv_numero_nos_internos(raiz->dir);
+    return arv_conta_folhas(raiz->esq) + arv_conta_folhas(raiz->dir);
 }
 
-// funcao que retorna a quantidade de nós de uma arvore binaria que possuem apenas um filho.
-int arv_um_filho(No *raiz) {
+// função que exclua todas as folhas de uma árvore binária.
+No *arv_deleta_folhas(No *raiz) {
     if(raiz == NULL) {
-        return 0;
+        return NULL;
     }
-    int sum = 0;
-    if(raiz->esq != NULL && raiz->dir == NULL || raiz->esq == NULL && raiz->dir != NULL) {
-        sum = 1;
+    if(raiz->esq == NULL && raiz->dir == NULL) {
+        free(raiz);
+        return NULL;
     }
-    return sum + arv_um_filho(raiz->esq) + arv_um_filho(raiz->dir);
+    raiz->esq = arv_deleta_folhas(raiz->esq);
+    raiz->dir = arv_deleta_folhas(raiz->dir);
+    return raiz;
+}
+
+//função recursiva que apaga todas as folhas de uma árvore que tenham a chave igual a um valor dado.
+No* arv_deleta_folhas_com_valor(int chave, No *raiz) {
+    if(raiz == NULL) {
+        return NULL;
+    }
+    if(raiz->esq == NULL && raiz->dir == NULL && raiz->chave == chave) {
+        free(raiz);
+        return NULL;
+    }
+    raiz->esq = arv_deleta_folhas_com_valor(chave, raiz->esq);
+    raiz->dir = arv_deleta_folhas_com_valor(chave, raiz->dir);
+    return raiz;
 }

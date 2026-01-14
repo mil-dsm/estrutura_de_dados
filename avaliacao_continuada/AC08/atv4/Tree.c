@@ -172,56 +172,32 @@ void arv_mostrar(No *node) {
     _mostrar(node, "");
 }
 
-// funcao que devolve a soma de todas as chaves de uma arvore binaria.
-int arv_soma_das_chaves(No *raiz) {
+
+// Função que cria uma cópia (um clone) de uma árvore binária.
+No *arv_clone(No *raiz) {
     if(raiz == NULL) {
-        return 0;
-    } else {
-        return raiz->chave + arv_soma_das_chaves(raiz->esq) +
-            arv_soma_das_chaves(raiz->dir);
+        return NULL;
     }
+    No *novo = (No*)malloc(sizeof(No));
+    novo->chave = raiz->chave;
+    novo->esq = arv_clone(raiz->esq);
+    novo->dir = arv_clone(raiz->dir);
+    return novo;
 }
 
-//  funcao que devolve o valor da menor chave de uma arvore binaria.
-int arv_chave_minima(No *raiz) {
-    if(raiz->esq == NULL && raiz->dir == NULL) {
-        return raiz->chave;
+// Duas árvores binárias são ditas idênticas quando possuem os 
+// mesmos dados e a disposição dos dados também é a mesma.
+// Escreva uma função recursiva que recebe duas árvores binárias 
+// como entrada e devolve true se elas forem idênticas; e false, caso contrário.
+bool arv_identical(No *raiz1, No *raiz2) {
+    if(raiz1 == NULL && raiz2 == NULL) {
+        return true;
     }
-    // Um filho
-    if(raiz->esq != NULL && raiz->dir == NULL) {
-        int min_sae = arv_chave_minima(raiz->esq);
-        return (raiz->chave < min_sae) ? raiz->chave : min_sae;
+    if(raiz1 == NULL || raiz2 == NULL) {
+        return false;
     }
-    if(raiz->esq == NULL && raiz->dir != NULL) {
-        int min_sad = arv_chave_minima(raiz->dir);
-        return (raiz->chave < min_sad) ? raiz->chave : min_sad;
-    }
-    // Dois filhos
-    int min_sae = arv_chave_minima(raiz->esq);
-    int min_sad = arv_chave_minima(raiz->dir);
-    int min = (min_sae < min_sad) ? min_sae : min_sad;
-    return (raiz->chave < min) ? raiz->chave : min;
-}
-
-// funcao que conta o numero de nós internos de uma arvore binaria.
-int arv_numero_nos_internos(No *raiz) {
-    if(raiz == NULL) {
-        return 0;
-    }
-    if(raiz->esq == NULL && raiz->dir == NULL) {
-        return 0;
-    }
-    return 1 + arv_numero_nos_internos(raiz->esq) + arv_numero_nos_internos(raiz->dir);
-}
-
-// funcao que retorna a quantidade de nós de uma arvore binaria que possuem apenas um filho.
-int arv_um_filho(No *raiz) {
-    if(raiz == NULL) {
-        return 0;
-    }
-    int sum = 0;
-    if(raiz->esq != NULL && raiz->dir == NULL || raiz->esq == NULL && raiz->dir != NULL) {
-        sum = 1;
-    }
-    return sum + arv_um_filho(raiz->esq) + arv_um_filho(raiz->dir);
+    if(raiz1->chave != raiz2->chave) {
+        return false;
+    } 
+    return arv_identical(raiz1->esq, raiz2->esq) && arv_identical(raiz1->dir, raiz2->dir);
 }

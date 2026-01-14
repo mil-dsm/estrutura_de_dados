@@ -34,17 +34,13 @@ No* arv_deserializar(char *str);
 void arv_mostrar(No *node);
 
 
-// funcao que devolve a soma de todas as chaves de uma arvore binaria.
-int arv_soma_das_chaves(No *raiz);
+// função que conta o número de folhas de uma árvore binária.
+int arv_conta_folhas(No *raiz);
 
-//  funcao que devolve o valor da menor chave de uma arvore binaria.
-int arv_chave_minima(No *raiz);
+// função que exclua todas as folhas de uma árvore binária.
+No *arv_deleta_folhas(No *raiz);
 
-// funcao que conta o numero de nós internos de uma arvore binaria.
-int arv_numero_nos_internos(No *raiz);
-
-// funcao que retorna a quantidade de nós de uma arvore binaria que possuem apenas um filho.
-int arv_um_filho(No *raiz);
-
+//função recursiva que apaga todas as folhas de uma árvore que tenham a chave igual a um valor dado.
+No* arv_deleta_folhas_com_valor(int chave, No *raiz);
 
 #endif
