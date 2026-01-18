@@ -763,3 +763,23 @@ Arv* copia(Arv* a) {
 // 14.2.6 Escreva umafunção que receba uma árvore binária não vazia e devolva o
 // endereço do primeiro nó da árvore na ordem e-r-d. Faça duas versões: uma iterativa 
 // e uma recursiva. Repita o exercício com “último” no lugar de “primeiro”.
+
+// 14.4.2 A profundidade de um nó em uma árvore binária é a distância entre o nó e
+// a raiz da árvore. Mais precisamente, a profundidade de um nó X é o comprimento
+// do (único) caminho que vai da raiz até X. Por exemplo, a profundidade da raiz é 0
+// e a profundidade de qualquer filho da raiz é 1. Escreva uma função que determine a
+// profundidade de um nó dado.
+
+// 14.4.4 Escreva uma função que imprima o conteúdo de cada nó de uma árvore binária
+// precedido de um recuo em relação à margem esquerda do papel. Esse recuo deve ser
+// proporcional à profundidade do nó. Veja Figura 14.4.
+
+// 14.4.5 Heap. Em que condições uma árvore binária pode ser considerada um heap
+// (veja Seção 10.1)? Escreva uma função que transforme um max-heap em uma árvore
+// binária quase completa. Escreva uma versão da função SacodeHeap (Seção 10.3) para
+// um max-heap representado por uma árvore binária
+
+// 14.5.1 Escreva uma função que receba um nó x de uma árvore binária e encontre o nó
+// anterior a x na ordem e-r-d.
+
+// 14.5.2 Escreva uma função que faça varredura e-r-d de um
