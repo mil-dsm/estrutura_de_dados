@@ -37,8 +37,4 @@ void arv_serializar(NoArv *r, char *str);
 // Cria uma arvore binaria a partir duma string serial valida
 NoArv* arv_deserializar(char *str, int *idx);
 
-// Como poderia adicionar um folha?
-// árvore binária de busca
-// busca em largura
-
 #endif
