@@ -50,7 +50,7 @@ NoArv* arv_free(NoArv* raiz) {
     } else {
         raiz->esq = arv_free(raiz->esq);
         raiz->dir = arv_free(raiz->dir);
-        // printf("arv_free: %d\n", raiz->chave);
+        printf("arv_free: %d\n", raiz->chave);
         free(raiz);
     }
 }
@@ -106,28 +106,24 @@ void arv_serializar(NoArv* r, char *str);
 // Cria uma arvore binaria a partir duma string serial valida
 NoArv* arv_deserializar(char *str, int *idx);
 
-// TODO: REVISAR
 // Calula o número de nós de uma árvore
 int bt_size(NoArv *raiz) {
     if(raiz == NULL) {
         return 0;
-    } else {
-        return 1 + bt_size(raiz->esq) + bt_size(raiz->dir);
     }
+    return 1 + bt_size(raiz->esq) + bt_size(raiz->dir);
 }
 
-// TODO: REVISAR
 // Calcula a altura da árvore
-int bt_height(NoArv* raiz) {
+int bt_height(NoArv *raiz) {
     if(raiz == NULL) {
-        return -1;
-    } else {
-        int sae = bt_height(raiz->esq);
-        int sad = bt_height(raiz->dir);
-        raiz->height = 1 + ((sae > sad) ? sae : sad);
-        return raiz->height;
+        return NULL;
     }
-}
+    int sae = bt_height(raiz->esq);
+    int sad = bt_height(raiz_dir);
+    raiz->height = 1 + ((sae > sad) ? sae : sad);
+    return raiz->height;
+} 
 
 // TODO: REVISAR
 // Suponha agora que todo nó da árvore tem um campo adicional code, do tipo string, 
@@ -200,7 +196,7 @@ NoArv* arv_deleta_folhas(NoArv *raiz) {
 
 // Questão 4: Conta o número de nós internos de uma árvore binária
 int arv_conta_nos_internos(NoArv *raiz) {
-    if(raiz == NULL) { // Caso base: raiz como folha ou vazia
+    if(raiz == NULL) { // Caso base
         return 0;
     }
     if(raiz->esq == NULL && raiz->dir == NULL) {
@@ -226,7 +222,6 @@ NoArv* arv_max(NoArv *raiz) {
     return max;
 }
 
-// TODO: REVISAR
 // Questão 6
 // Escreve uma função que encontre um nó com a chave k em uma ávore binária
 // Retorna um ponteiro para o nó, caso ele exista, ou NULL, caso contrário

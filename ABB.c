@@ -14,7 +14,7 @@ NoArv* abb_cria_vazia(void) {
     return NULL;
 }
 
-void abb_free(NoArv *node) {
+void abb_free(NoArv *raiz) {
     if(raiz == NULL) {
         return;
     }
@@ -25,7 +25,7 @@ void abb_free(NoArv *node) {
 }
 // Procura o valor passado e, se encontrar, retorna o nó,
 // caso contrário, retorna NULL.
-NoArv* abb_busca(NoArv *node, int valor) {
+NoArv* abb_busca(NoArv *raiz, int valor) {
     if(raiz == NULL) {
         return;
     }
@@ -44,7 +44,7 @@ NoArv* abb_busca(NoArv *node, int valor) {
 // Esta funcao insere um novo valor na arvore somente
 // se a chave nao for repetida. Ela devolve um ponteiro
 // para a raiz da nova arvore.
-NoArv* abb_insere(NoArv *node, int valor) {
+NoArv* abb_insere(NoArv *raiz, int valor) {
     if(raiz == NULL) {
         NoArv *novo = (NoArv*)malloc(sizeof(NoArv));
         novo->chave = valor;
@@ -63,114 +63,121 @@ NoArv* abb_insere(NoArv *node, int valor) {
 
 // Retorna um ponteiro para o no com valor minimo,
 // ou nulo se nao existir (arvore vazia)
-NoArv* abb_minimo(NoArv *node) {
-    if(node == NULL) {
+NoArv* abb_minimo(NoArv *raiz) {
+    if(raiz == NULL) {
         return NULL;
     }
-    if(node->esq == NULL) {
-        return node;
+    if(raiz->esq == NULL) {
+        return raiz;
     }
-    return abb_minimo(node->esq);
+    return abb_minimo(raiz->esq);
 }
 
 // Retorna um ponteiro para o no com valor máximo,
 // ou nulo se nao existir (arvore vazia)
-NoArv* abb_maximo(NoArv *node) {
-    if(node == NULL) {
+NoArv* abb_maximo(NoArv *raiz) {
+    if(raiz == NULL) {
         return NULL;
     }
-    if(node->dir == NULL) {
-        return node;
+    if(raiz->dir == NULL) {
+        return raiz;
     }
-    return abb_maximo(node->dir);
+    return abb_maximo(raiz->dir);
 }
 
 // Remove o no com o valor fornecido, se ele existir
-NoArv* abb_remove(NoArv *node, int valor) {
-    if(node == NULL) {
+NoArv* abb_remove(NoArv *raiz, int valor) {
+    if(raiz == NULL) {
         return NULL;
     }
-    if(node->chave == valor) {
-        return abb_remove_raiz(node);
+    if(raiz->chave == valor) {
+        return abb_remove_raiz(raiz);
     }
-    else if(node->chave > valor) {
-        return abb_remove(node->esq, valor);
+    if(raiz->chave > valor) {
+        abb_remove(raiz->esq);
     }
-    else if(node->chave < valor) {
-        return abb_remove(node->dir, valor);
+    if(raiz->chave < valor) {
+        abb_remove(raiz->dir);
     }
-    return node;
+}
+
+NoArv* abb_remove_raiz(NoArv *node) {
+    if(raiz == NULL) {
+        return NULL;
+    }
+    if(raiz->dir == NULL) {
+        return raiz->esq;
+    } else {
+        NoArv *pai = node; // Marca o pai do sucessor
+        NoArv *raiz = node->dir; // Marca o sucessor direito
+        while(raiz->esq != NULL) {
+            pai = raiz; // Sucessor direto
+            raiz = raiz->left; // Percorre para encontrar o sucessor
+        }
+        if(pai != node) {
+            pai->esq = raiz->dir;
+            raiz->dir = node->dir;
+        }
+        raiz->esq = node->esq;
+        free(node);
+        return raiz;
+    }
 }
 
 // Recebe um ponteiro para a raiz de uma arvore e
 // remove a raiz, rearranjando a arvore de mode que ela
 // continue sendo de busca. Devolve a raiz da nova arvore
-NoArv* abb_remove_raiz(NoArv *node) {
-    NoArv *raiz = node;
-    if(node->dir == NULL) {
-        raiz = node->esq;
-    } else {
-        NoArv *pai = node;
-        raiz - node->dir;
-
-        while(raiz->esq != NULL) {
-        pai = raiz;
-        raiz = raiz->esq;
-    }
-    pai->esq = raiz->dir;
-    pai->dir = raiz->dir;
-    }
-}
+NoArv* abb_remove_raiz(NoArv *raiz);
 
 // Suponha que todo nó da BST tenha agora um ponteiro para nó pai.
 // Reimplemente as operações vistas nessa aula considerando este novo
 // ponteiro.
 
-void abb_free(NoArv *node) {
-    if(node == NULL) {
+void abb_free(NoArv *raiz) {
+    if(raiz == NULL) {
         return;
     }
-    abb_free(node->esq);
-    abb_free(node->dir);
+    abb_free(raiz->esq);
+    abb_free(raiz->dir);
 }
 
 // Procura o valor passado e, se encontrar, retorna o nó,
 // caso contrário, retorna NULL.
-NoArv* abb_busca(NoArv *node, int valor) {
-    if(node == NULL) {
+NoArv* abb_busca(NoArv *raiz, int valor) {
+    if(raiz == NULL) {
         return NULL;
     }
-    if(node->chave == valor) {
-        return node;
+    if(raiz->chave == valor) {
+        return raiz;
     }
 }
 
 // Esta funcao insere um novo valor na arvore somente
 // se a chave nao for repetida. Ela devolve um ponteiro
 // para a raiz da nova arvore.
-NoArv* abb_insere(NoArv *node, int valor);
+NoArv* abb_insere(NoArv *raiz, int valor);
 
 // Retorna um ponteiro para o no com valor minimo,
 // ou nulo se nao existir (arvore vazia)
-NoArv* abb_minimo(NoArv *node);
+NoArv* abb_minimo(NoArv *raiz);
 
 // Retorna um ponteiro para o no com valor máximo,
 // ou nulo se nao existir (arvore vazia)
-NoArv* abb_maximo(NoArv *node);
+NoArv* abb_maximo(NoArv *raiz);
 
 /* Lista 06 */
 
 // 1. Escreva uma função que decida se uma dada árvore binária é ou não de busca.
 // Verificar, dentro de um intervalo de minimos de mínimos e máximos os valores
 // de cada subárvore
-bool eh_abb(NoArv *node, int min, int max) {
-    if(node == NULL) {
+bool eh_abb(NoArv *raiz, int min, int max) {
+    if(raiz == NULL) {
         return true;
     }
-    if(node->chave < min || node->chave > max) {
+    if(raiz->chave < min || raiz->chave > max) {
         return false;
     }
-    return eh_abb(node->esq, min, node->chave) && eh_abb(node->dir, node->chave, max);
+    return eh_abb(raiz->esq, min, raiz->chave) && eh_abb(raiz->dir, raiz->chave, max);
 }
 
 // 3. Escreva uma função que transforme um vetor ordenado em ordem crescente em uma
@@ -190,14 +197,14 @@ NoArv* abb_constroi(int *v, int inicio, int fim) {
 
 // 4. Escreva uma função que transforme uma árvore de busca em um vetor crescente.
 // Usando persurso de órsem simetruc
-void abb_desconstroi(NoArv *node, int *v, int *idx) {
-    if(node == NULL) {
+void abb_desconstroi(NoArv *raiz, int *v, int *idx) {
+    if(raiz == NULL) {
         return;
     }
-    abb_desconstroi(node->esq, v, idx);
-    v[*idx] = node->chave;
+    abb_desconstroi(raiz->esq, v, idx);
+    v[*idx] = raiz->chave;
     (*idx)++;
-    abb_desconstroi(node->dir, v, idx);
+    abb_desconstroi(raiz->dir, v, idx);
 }
 
 // 8. [Percurso em ordem simétrica] Escreva um algoritmo iterativo que percorre
@@ -210,7 +217,7 @@ void abb_print_io(NoArv *raiz) {
     Stack *p = stack_create();
     stack_push(p, raiz);
     while(!stack_empty(p)) {
-        
+
     }
 }
 
