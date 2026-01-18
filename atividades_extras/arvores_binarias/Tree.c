@@ -88,16 +88,6 @@ void arv_print_po(NoArv* raiz) {
     }
 }
 
-// Coloca os valores de uma árvore em percurso por largura em uma fila
-void arv_largura(NoArv *raiz, Queue *q) {
-    if(raiz == NULL) {
-        return;
-    }
-    queue_push(q, raiz->chave);
-    arv_largura(raiz->esq, q);
-    arv_largura(raiz->dir, q);
-}
-
 // TODO: REVISAR
 // Cria uma string serial da arvore binaria
 void arv_serializar(NoArv* r, char *str);
@@ -117,13 +107,12 @@ int bt_size(NoArv *raiz) {
 // Calcula a altura da árvore
 int bt_height(NoArv *raiz) {
     if(raiz == NULL) {
-        return NULL;
+        return 0;
     }
     int sae = bt_height(raiz->esq);
     int sad = bt_height(raiz_dir);
-    raiz->height = 1 + ((sae > sad) ? sae : sad);
-    return raiz->height;
-} 
+    return 1 + ((sae > sad) ? sae : sad);
+}
 
 // TODO: REVISAR
 // Suponha agora que todo nó da árvore tem um campo adicional code, do tipo string, 
@@ -232,15 +221,13 @@ NoArv* arv_procura(NoArv *raiz, int k) {
     if(raiz->chave == k) {
         return raiz;
     }
-    if(arv_procura(raiz->esq, k)) {
-        return arv_procura(raiz->esq, k);
-    }
-    return arv_procura(raiz->dir, k);
+    NoArv *sae = arv_procura(raiz->esq, k);
+    NoArv *sad = arv_procura(raiz->dir, k);
+    return ((sae != NULL) ? sae : sad);
 }
 
-// Questão 7
-// Função recursiva que apaga todas as folhas de uma árvore que tenha a chave
-// igual ao valor dado
+// Questão 7 Função recursiva que apaga todas as folhas de uma
+// árvore que tenha a chave igual ao valor dado
 NoArv* arv_deleta_folhas_com_valor(NoArv *raiz, int valor) {
     if(raiz == NULL) {
         return NULL;
