@@ -642,6 +642,49 @@ NoArv* bt_cria(int valor, NoArv *sae, NoArv *sad) {
     return novo;
 }
 
+// Questão 19. Escreva um algoritmo que receba uma expressão matemática 
+// (composta por operandos compostos por um único algarismo, 
+// operações de $+$, $-$, $*$, $/$ e parênteses) representada 
+// por uma string e retorne uma árvore binária representando 
+// esta expressão.
+
+// Questão 20. Dada uma árvore binária que represente uma expressão matemática, 
+// construa um algoritmo que imprima a versão infixa (in-ordem) da expressão.
+
+// Questão 21. Dada uma árvore binária que represente uma expressão matemática, 
+// construa um algoritmo que imprima a versão posfixa (ou pós-ordem) da expressão.
+
+// Questão 24: Escreva uma função que recebe uma árvore binária como parâmetro e percorre 
+// em nível à árvore binária. Sugestão: utilizar a estutura de dados fila.
+void bt_largura(NoArv *raiz) {
+    if(raiz == NULL) {
+        return;
+    }
+    Queue q = queue_create();
+    queue_push(q, raiz);
+    while(!queue_empty(q)) {
+        NoArv *atual = queue_front(q);
+        queue_pop(q);
+        printf("%d ", atual->chave);
+        if(atual->esq != NULL) queue_push(q, atual->esq);
+        if(atual->dir != NULL) queue_push(q, atual->dir);
+    }
+    queue_free(q);
+}
+
+// Questão 25: Considere que uma árvore vazia é representada como um ponteiro 
+// nulo (Uma árvore vazia é, por default, uma árvore quase-cheia).
+// Não é permitido implementar funções auxiliares, ou seja, a função quaseCheia 
+// deve ser autocontida (porém é permitido chamadas recursivas, se necessário).
+// Função que receba uma árvore como parâmetro e retorne um inteiro diferente 
+// de 0 se a árvore é quase-cheia ou retorne 0 se a árvore não é quase-cheia.
+// Tarefa adicional: Note que a função deve retornar um inteiro diferente de 0 
+// caso a árvore seja quase-cheia. Portanto, o retorno pode ser tanto positivo 
+// quanto negativo, o que permite representar se a árvore é quase-cheia e cheia 
+// ao mesmo tempo ou se ela é apenas quase-cheia. (Uma árvore cheia é uma árvore 
+// em que todos os níveis possuem o máximo número de nós possível.)
+int bt_quaseCheia(NoArv *root);
+
 /* Livro: Introdução à Estrutura de Dados */
 
 // Imprime valores da árvore com formatação
