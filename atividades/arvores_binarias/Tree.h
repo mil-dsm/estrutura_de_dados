@@ -1,63 +1,72 @@
-#ifndef BINARY_TREE
-#define BINARY_TREE
-#include <stdbool.h>
+/**
+ * @file Tree.h
+ * @author milenadsmesquita@gmail.com
+ * @brief TAD de árvore binária
+ * @version 0.1
+ * @date 2026-01-14
+ * 
+ * @copyright Copyright (c) 2026
+ * 
+ */
 
-typedef enum { ERROR_OK, ERROR_ALLOCATION, ERROR_NULL_POINTER } ErrorType;
+#ifndef BTREE
+#define BTREE
 
-typedef struct arv_node Node;
+typedef struct arv NoArv;
+
+/* Slides */
 
 // Cria uma árvore vazia
-Node* arv_cria_vazia(void);
+NoArv* arv_cria_vazia(void);
 
-// Cria uma árvore a partir de duas sub-arvores distintas
-Node* arv_cria(int valor, Node *sae, Node *sad);
+// Cria árvore a partir de duas subárvores
+NoArv* arv_cria(int value, NoNoArv* sae, NoNoArv* sad);
 
-// Retorna true se e somente se a árvore for vazia
-bool arv_vazia(Node *r);
+// Verifica se a árvore é vazia
+bool arv_vazia(NoArv* raiz);
 
-// Imprime as keys de todos os nós da árvore
-void arv_print(Node *r);
+// Imprime valores da árvore
+void arv_print(NoArv* raiz);
 
-// Libera todos os nós das árvores
-Node* arv_free(Node *r);
+// Imprime valores da árvore de forma iterativa
+void arv_print_iterativa(NoArv* raiz);
 
-// Verifica se um valor esta contido na árvore
-bool arv_is_contained(Node *r, int valor);
+// Libera nós da árvore
+NoArv* arv_free(NoArv* raiz);
 
-// Percurso pré-ordem
-void arv_preordem(Node *r);
+// Verifica a existência de um valor entre os nós da árvore
+bool arv_pertence(NoArv* raiz, int value);
 
-// Percurso pós-ordem
-void arv_posordem(Node *r);
+// Imprime os valores de uma árvore em percurso de ordem simétrica
+void arv_print_os(NoArv* raiz);
 
-// Percuso ordem simétrica
-void arv_ordemsimetrica(Node *r);
+// Imprime os valores de uma árvore em percurso de pós-órdem
+void arv_print_po(NoArv* raiz);
 
-// Cria uma string serial da árvore binária (pré-ordem)
-void arv_serializar(Node *r, char *str);
+// Coloca os valores de uma árvore em percurso por largura em uma fila
+void arv_largura(NoArv *raiz, Queue *q);
 
-// Cria uma árvore binária a partir de uma string serial válida (pré-ordem)
-Node* arv_descerializar(char *str, int *idx);
+// TODO: REVISAR
+// Cria uma string serial da arvore binaria
+void arv_serializar(NoArv* r, char *str);
 
-// Cria uma string serial da árvore binária (pós-ordem)
-void arv_serializar_po(Node *r, char *str);
+// TODO: REVISAR
+// Cria uma arvore binaria a partir duma string serial valida
+NoArv* arv_deserializar(char *str, int *idx);
 
-// Cria uma árvore binária a partir de uma string serial válida (pós-ordem)
-void arv_descerializar_po(Node *r, char *str);
+// TODO: REVISAR
+// Calula o número de nós de uma árvore
+int bt_size(NoArv *raiz);
 
-// Cria uma string serial da árvore binária (ordem simétrica)
-void arv_serializar_os(Node *r, char *str);
+// TODO: REVISAR
+// Calcula a altura da árvore
+int bt_height(NoArv* raiz);
 
-// Cria uma árvore binária a partir de uma string serial válida (ordem simétrica)
-void arv_descerializar_os(Node *r, char *str);
-
-// Percurso em largura
-Queue* arv_perc_em_larg(Node *r);
-
-// Número de nós de uma árvove
-int bt_size(Node *node);
-
-// Altura de uuma árvore
-int bt_height(Node *node);
+// TODO: REVISAR
+// Suponha agora que todo nó da árvore tem um campo adicional code, do tipo string, 
+// capaz de armazenar uma cadeia de caracteres de tamanho variável.
+// Essa função reencha o campo code de cada nó com o código do nó. Se dor para esquerda,
+// o código é 0, e se for pra direita, o código é 1.
+void bt_code(NoArv *raiz, char *code);
 
 #endif
