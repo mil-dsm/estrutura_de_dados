@@ -96,6 +96,7 @@ void arv_serializar(NoArv* r, char *str);
 // Cria uma arvore binaria a partir duma string serial valida
 NoArv* arv_deserializar(char *str, int *idx);
 
+// TODO: REVISAR
 // Calula o número de nós de uma árvore
 int bt_size(NoArv *raiz) {
     if(raiz == NULL) {
@@ -104,6 +105,7 @@ int bt_size(NoArv *raiz) {
     return 1 + bt_size(raiz->esq) + bt_size(raiz->dir);
 }
 
+// TODO: REVISAR
 // Calcula a altura da árvore
 int bt_height(NoArv *raiz) {
     if(raiz == NULL) {
@@ -164,6 +166,8 @@ int arv_conta_folhas(NoArv *raiz) {
     }
     if(raiz->esq == NULL && raiz->dir == NULL) {
         return 1;
+    } else {
+        return 0;
     }
     return arv_conta_folhas(raiz->esq) + arv_conta_folhas(raiz->dir);
 }
@@ -185,10 +189,10 @@ NoArv* arv_deleta_folhas(NoArv *raiz) {
 
 // Questão 4: Conta o número de nós internos de uma árvore binária
 int arv_conta_nos_internos(NoArv *raiz) {
-    if(raiz == NULL) { // Caso base
+    if(raiz == NULL) { // Caso base: árvore vazia
         return 0;
     }
-    if(raiz->esq == NULL && raiz->dir == NULL) {
+    if(raiz->esq == NULL && raiz->dir == NULL) { // Caso folha
         return 0;
     }
     return 1 + arv_conta_nos_internos(raiz->esq) + arv_conta_nos_internos(raiz->dir);
@@ -211,9 +215,8 @@ NoArv* arv_max(NoArv *raiz) {
     return max;
 }
 
-// Questão 6
-// Escreve uma função que encontre um nó com a chave k em uma ávore binária
-// Retorna um ponteiro para o nó, caso ele exista, ou NULL, caso contrário
+// Questão 6: Escreve uma função que encontre um nó com a chave k em uma árvore 
+// binária. Retorna um ponteiro para o nó, caso ele exista, ou NULL, caso contrário.
 NoArv* arv_procura(NoArv *raiz, int k) {
     if(raiz == NULL) {
         return NULL;
@@ -226,8 +229,8 @@ NoArv* arv_procura(NoArv *raiz, int k) {
     return ((sae != NULL) ? sae : sad);
 }
 
-// Questão 7 Função recursiva que apaga todas as folhas de uma
-// árvore que tenha a chave igual ao valor dado
+// Questão 7: Função recursiva que apaga todas as folhas de uma
+// árvore que tenha a chave igual ao valor dado.
 NoArv* arv_deleta_folhas_com_valor(NoArv *raiz, int valor) {
     if(raiz == NULL) {
         return NULL;
@@ -401,7 +404,7 @@ NoArv* bt_copia(NoArv *root) {
     novo->chave = raiz->chave;
     novo->esq = arv_copia(raiz->esq);
     novo->dir = arv_copia(raiz->dir);
-    return novo;    
+    return novo;
 }
 
 // Questão 10
@@ -426,7 +429,13 @@ bool eh_binaria(NoArv *raiz) {
     if(raiz == NULL) {
         return true;
     }
-    if(raiz->esq == NULL || raiz->dir == NULL) {
+    if(raiz->esq == NULL && raiz->dir == NULL) {
+        return true;
+    }
+    if(raiz->esq != NULL && raiz->dir == NULL) {
+        return false;
+    }
+    if(raiz->esq == NULL && raiz->dir != NULL) {
         return false;
     }
     return eh_binaria(raiz->esq) && eh_binaria(raiz->dir);
